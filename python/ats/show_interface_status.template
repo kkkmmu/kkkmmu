@@ -1,0 +1,14 @@
+Value IFACE (\S+)
+Value TYPE (\S+)
+Value ADMIN_STATUS (\S+)
+Value OPER_STATUS (\S+)
+Value AUTONEGO (\S+)
+Value DUPLEX (\S+)
+Value SPEED (\S+)
+Value ADMIN_FLOWCTRL (On:On|Off:Off|Off:On|On:Off|NA:NA|N/A:N/A|On|Off|NA|N/A)
+Value OPER_FLOWCTRL (On:On|Off:Off|Off:On|On:Off|NA:NA|N/A:N/A|On|Off|NA|N/A)
+
+Start
+  ^${IFACE}\s+${TYPE}\s+${ADMIN_STATUS}\/${OPER_STATUS}\s+${AUTONEGO}\/${DUPLEX}\/${SPEED}\s+${ADMIN_FLOWCTRL}\/${OPER_FLOWCTRL} -> Record
+
+EOF

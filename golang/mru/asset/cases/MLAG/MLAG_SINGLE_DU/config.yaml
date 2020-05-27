@@ -1,0 +1,22 @@
+Devices:
+    DUT1: {Name: DUT1, Device: M3000, Hostname: M3000_2, IP: 10.71.20.169, Protocol: telnet, Username: admin, Password: Dasan123456}
+    DUT2: {Name: DUT2, Device: M3000, Hostname: M3000_3, IP: 10.71.20.212, Protocol: telnet, Username: admin, Password: Dasan123456}
+    DUT3: {Name: DUT3, Device: M2400, Hostname: MLAG_DU, IP: 10.71.20.172, Protocol: telnet, Username: admin, Password: Dasan123456}
+
+Emulator: {Name: TESTER, Device: N2X, IP: 10.71.20.231, Port: 9001}
+
+Ifps:
+    D1I1: {Name: D1I1, Enable: true, Media: "SFP", FullName: ethernet 0/13, ShortName: eth0/13}
+    D1I2: {Name: D1I2, Enable: true, Media: "SFP", FullName: ethernet 0/20, ShortName: eth0/20}
+    D1I3: {Name: D1I3, Enable: true, Media: "SFP", FullName: ethernet 0/24, ShortName: eth0/24}
+    D1I4: {Name: D1I4, Enable: true, Media: "SFP", FullName: ethernet 0/1, ShortName: eth0/1}
+    D1I5: {Name: D2I1, Enable: true, Media: "SFP", FullName: ethernet 0/13, ShortName: eth0/13}
+    D2I2: {Name: D2I2, Enable: true, Media: "SFP", FullName: ethernet 0/20, ShortName: eth0/20}
+    D2I3: {Name: D2I3, Enable: true, Media: "SFP", FullName: ethernet 0/24, ShortName: eth0/24}
+    D2I4: {Name: D2I4, Enable: true, Media: "SFP", FullName: ethernet 0/1, ShortName: eth0/1}
+    D3I1: {Name: D3I1, Enable: true, Media: "SFP", FullName: gigabitethernet 2/2, ShortName: ge2/2}
+    D3I2: {Name: D3I2, Enable: true, Media: "SFP", FullName: gigabitethernet 2/1, ShortName: ge2/1}
+    D3I3: {Name: D3I3, Enable: true, Media: "SFP", FullName: gigabitethernet 2/3, ShortName: ge2/3}
+    T1I1: {Name: T1I1, Enable: true, Media: "SFP", FullName: 103/1, ShortName: 103/1}
+    T2I2: {Name: T1I2, Enable: true, Media: "SFP", FullName: 103/2, ShortName: 103/2}
+    T3I3: {Name: T1I3, Enable: false, Media: "SFP", FullName: 103/3, ShortName: 103/3}

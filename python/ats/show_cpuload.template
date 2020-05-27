@@ -1,0 +1,22 @@
+Value CPULOAD_5_SEC (\d+\.\d+)
+Value INTERRUPT_5_SEC (\d+\.\d+)
+Value CPULOAD_1_MIN (\d+\.\d+)
+Value INTERRUPT_1_MIN (\d+\.\d+)
+Value CPULOAD_10_MIN (\d+\.\d+)
+Value INTERRUPT_10_MIN (\d+\.\d+)
+Value HIGH_THRESHOLD (\d+)
+Value HIGH_INTERVAL (\d+)
+Value LOW_THRESHOLD (\d+)
+Value LOW_INTERVAL (\d+)
+
+Start
+  ^\s*5 sec\:\s+${CPULOAD_5_SEC}\(\s*${INTERRUPT_5_SEC}\)\s*\%
+  ^\s*1 min\:\s+${CPULOAD_1_MIN}\(\s*${INTERRUPT_1_MIN}\)\s*\%
+  ^\s*10 min\:\s+${CPULOAD_10_MIN}\(\s*${INTERRUPT_10_MIN}\)\s*\%
+  ^\s*cpuload\s*threshold\s*\(high\)\s*\:\s+${HIGH_THRESHOLD}
+  ^\s*timer\s+interval\s*\(high\)\s*\:\s+${HIGH_INTERVAL}
+  ^\s*cpuload\s*threshold\s*\(low\)\s*\:\s+${LOW_THRESHOLD}
+  ^\s*timer\s+interval\s*\(low\)\s*\:\s+${LOW_INTERVAL} -> Record
+
+
+EOF

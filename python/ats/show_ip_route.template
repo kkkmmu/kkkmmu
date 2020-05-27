@@ -1,0 +1,27 @@
+Value Filldown PROTOCOL (\S)
+Value Filldown CANDIDATE (\s|\*)
+Value Filldown CODE (\s\s|\S\s|\S\S)
+Value Required,Filldown NETWORK (\S+)
+Value Filldown MASK (\d{1,2})
+Value DISTANCE (\d+)
+Value METRIC (\d+)
+Value NEXTHOP_IP (\S+)
+Value NEXTHOP_IF (\S+)
+Value UPTIME (\S+)
+Value RECURSIVE (\S+)
+
+Start
+  #B       22.22.22.0/24 [20/0] via 21.21.21.2, xe0/2, 00:01:03
+  ^${PROTOCOL}${CANDIDATE}${CODE}\s+${NETWORK}\/${MASK}\s\[${DISTANCE}/${METRIC}\]\svia\s${NEXTHOP_IP},\s${NEXTHOP_IF},\s${UPTIME} -> Record
+  #                  [115/1200] via 20.56.3.4, po1.10, 00:04:32
+  ^\s+\[${DISTANCE}/${METRIC}\]\svia\s${NEXTHOP_IP},\s${NEXTHOP_IF},\s${UPTIME} -> Record
+  #S       192.168.0.0/24 [1/0] via 30.1.1.2 (recursive via 40.1.1.1 )
+  ^${PROTOCOL}${CANDIDATE}${CODE}\s+${NETWORK}\/${MASK}\s\[${DISTANCE}/${METRIC}\]\svia\s${NEXTHOP_IP}\s\(recursive via\s${RECURSIVE}\s*\) -> Record
+  #                     [1/0] via 30.1.1.2 (recursive via 40.1.1.1 )
+  ^\s+\[${DISTANCE}/${METRIC}\]\svia\s${NEXTHOP_IP}\s\(recursive via\s${RECURSIVE}\s*\) -> Record
+  #S       10.0.0.0/8 [1/0] via 10.55.194.254, mgmt
+  ^${PROTOCOL}${CANDIDATE}${CODE}\s+${NETWORK}\/${MASK}\s\[${DISTANCE}/${METRIC}\]\svia\s${NEXTHOP_IP},\s${NEXTHOP_IF} -> Record
+  #C       10.55.194.0/24 is directly connected, mgmt
+  ^${PROTOCOL}${CANDIDATE}${CODE}\s+${NETWORK}\/${MASK}\sis directly connected,\s${NEXTHOP_IF} -> Record
+
+EOF

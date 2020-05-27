@@ -1,0 +1,11 @@
+Value INTERFACE (\S+)
+Value PID (\d+)
+Value AREA (\d+\.\d+\.\d+\.\d+)
+Value INTERFACE_ID (\d+)
+Value COST (\d+)
+Value STATE (\S+)
+Value NEIGHBORS (\d+)
+Value NSTATUS (\S+)
+
+Start
+  ^${INTERFACE}\s+${PID}\s+${AREA}\s+${INTERFACE_ID}\s+${COST}\s+${STATE}\s+${NEIGHBORS}\s+${NSTATUS} -> Record

@@ -1,0 +1,61 @@
+Devices:
+    DUT1: {Name: DUT1, Device: M3000, Hostname: M3000_2, IP: 10.71.20.169, Protocol: telnet, Username: admin, Password: Dasan123456}
+    DUT2: {Name: DUT2, Device: M3000, Hostname: M3000_3, IP: 10.71.20.212, Protocol: telnet, Username: admin, Password: Dasan123456}
+    DUT3: {Name: DUT3, Device: M2400, Hostname: MLAG_DU, IP: 10.71.20.172, Protocol: telnet, Username: admin, Password: Dasan123456}
+
+Emulator: {Name: TESTER, Device: N2X, IP: 10.71.20.231, Port: 9001}
+
+Ifps:
+    D1I1: {Name: D1I1, Media: "SFP", FullName: ethernet 0/13, ShortName: eth0/13}
+    D1I2: {Name: D1I2, Media: "SFP", FullName: ethernet 0/5, ShortName: eth0/5}
+    D1I3: {Name: D1I3, Media: "SFP", FullName: ethernet 0/24, ShortName: eth0/24}
+    D1I4: {Name: D1I4, Media: "SFP", FullName: ethernet 0/1, ShortName: eth0/1}
+    D1I5: {Name: D1I5, Media: "SFP", FullName: ethernet 0/2, ShortName: eth0/2}
+    D1I6: {Name: D1I6, Media: "SFP", FullName: ethernet 0/3, ShortName: eth0/3}
+    D1I7: {Name: D1I7, Media: "SFP", FullName: ethernet 0/4, ShortName: eth0/4}
+    D1I8: {Name: D1I8, Media: "SFP", FullName: ethernet 0/6, ShortName: eth0/6}
+    D1I9: {Name: D1I9, Media: "SFP", FullName: ethernet 0/7, ShortName: eth0/7}
+    D1I10: {Name: D1I10, Media: "SFP", FullName: ethernet 0/8, ShortName: eth0/8}
+    D1I11: {Name: D1I11, Media: "SFP", FullName: ethernet 0/9, ShortName: eth0/9}
+    D1I12: {Name: D1I12, Media: "SFP", FullName: ethernet 0/10, ShortName: eth0/10}
+    D1I13: {Name: D1I13, Media: "SFP", FullName: ethernet 0/11, ShortName: eth0/11}
+    D1I14: {Name: D1I14, Media: "SFP", FullName: ethernet 0/12, ShortName: eth0/12}
+    D1I15: {Name: D1I15, Media: "SFP", FullName: ethernet 0/14, ShortName: eth0/14}
+    D1I16: {Name: D1I16, Media: "SFP", FullName: ethernet 0/15, ShortName: eth0/15}
+    D1I17: {Name: D1I17, Media: "SFP", FullName: ethernet 0/16, ShortName: eth0/16}
+    D1I18: {Name: D1I18, Media: "SFP", FullName: ethernet 0/17, ShortName: eth0/17}
+    D1I19: {Name: D1I19, Media: "SFP", FullName: ethernet 0/18, ShortName: eth0/18}
+    D1I20: {Name: D1I20, Media: "SFP", FullName: ethernet 0/19, ShortName: eth0/19}
+    D1I21: {Name: D1I21, Media: "SFP", FullName: ethernet 0/20, ShortName: eth0/20}
+    D1I22: {Name: D1I22, Media: "SFP", FullName: ethernet 0/21, ShortName: eth0/21}
+    D1I23: {Name: D1I23, Media: "SFP", FullName: ethernet 0/22, ShortName: eth0/22}
+    D1I24: {Name: D1I24, Media: "SFP", FullName: ethernet 0/23, ShortName: eth0/23}
+    D2I1: {Name: D2I1, Media: "SFP", FullName: ethernet 0/13, ShortName: eth0/13}
+    D2I2: {Name: D2I2, Media: "SFP", FullName: ethernet 0/5, ShortName: eth0/5}
+    D2I3: {Name: D2I3, Media: "SFP", FullName: ethernet 0/24, ShortName: eth0/24}
+    D2I4: {Name: D2I4, Media: "SFP", FullName: ethernet 0/1, ShortName: eth0/1}
+    D2I5: {Name: D2I5, Media: "SFP", FullName: ethernet 0/2, ShortName: eth0/2}
+    D2I6: {Name: D2I6, Media: "SFP", FullName: ethernet 0/3, ShortName: eth0/3}
+    D2I7: {Name: D2I7, Media: "SFP", FullName: ethernet 0/4, ShortName: eth0/4}
+    D2I8: {Name: D2I8, Media: "SFP", FullName: ethernet 0/6, ShortName: eth0/6}
+    D2I9: {Name: D2I9, Media: "SFP", FullName: ethernet 0/7, ShortName: eth0/7}
+    D2I10: {Name: D2I10, Media: "SFP", FullName: ethernet 0/8, ShortName: eth0/8}
+    D2I11: {Name: D2I11, Media: "SFP", FullName: ethernet 0/9, ShortName: eth0/9}
+    D2I12: {Name: D2I12, Media: "SFP", FullName: ethernet 0/10, ShortName: eth0/10}
+    D2I13: {Name: D2I13, Media: "SFP", FullName: ethernet 0/11, ShortName: eth0/11}
+    D2I14: {Name: D2I14, Media: "SFP", FullName: ethernet 0/12, ShortName: eth0/12}
+    D2I15: {Name: D2I15, Media: "SFP", FullName: ethernet 0/14, ShortName: eth0/14}
+    D2I16: {Name: D2I16, Media: "SFP", FullName: ethernet 0/15, ShortName: eth0/15}
+    D2I17: {Name: D2I17, Media: "SFP", FullName: ethernet 0/16, ShortName: eth0/16}
+    D2I18: {Name: D2I18, Media: "SFP", FullName: ethernet 0/17, ShortName: eth0/17}
+    D2I19: {Name: D2I19, Media: "SFP", FullName: ethernet 0/18, ShortName: eth0/18}
+    D2I20: {Name: D2I20, Media: "SFP", FullName: ethernet 0/19, ShortName: eth0/19}
+    D2I21: {Name: D2I21, Media: "SFP", FullName: ethernet 0/20, ShortName: eth0/20}
+    D2I22: {Name: D2I22, Media: "SFP", FullName: ethernet 0/21, ShortName: eth0/21}
+    D2I23: {Name: D2I23, Media: "SFP", FullName: ethernet 0/22, ShortName: eth0/22}
+    D2I24: {Name: D2I24, Media: "SFP", FullName: ethernet 0/23, ShortName: eth0/23}
+    D3I1: {Name: D3I1, Media: "SFP", FullName: gigabitethernet 2/2, ShortName: ge2/2}
+    D3I2: {Name: D3I2, Media: "SFP", FullName: gigabitethernet 2/1, ShortName: ge2/1}
+    D3I3: {Name: D3I3, Media: "SFP", FullName: gigabitethernet 2/3, ShortName: ge2/3}
+    T1I1: {Name: T1I1, Media: "SFP", FullName: 103/1, ShortName: 103/1}
+    T1I2: {Name: T1I2, Media: "SFP", FullName: 103/2, ShortName: 103/2}

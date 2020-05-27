@@ -1,0 +1,21 @@
+Value BRIDGE (\d+)
+Value VID (\d+)
+Value NAME (\S+)
+Value STATE (ACTIVE|Active|DEACTIVE|Deactive)
+Value HW_STATE (\S+)
+Value List PORTS (\S+\/\S+|\S+)
+Value List TYPE (u|t)
+
+Start
+  ^\s+\(u\)\-Untagged\, \(t\)\-Tagged -> VLANS
+
+VLANS
+  ^\d+ -> Continue.Record
+  ^\s*${BRIDGE}\s+${VID}\s+${NAME}\s+${STATE}\s+${HW_STATE}\s* -> Continue
+  ^\s*${BRIDGE}\s+${VID}\s+${NAME}\s+${STATE}\s+${HW_STATE}\s+${PORTS}\(${TYPE}\)\s* -> Continue
+  ^\d+\s+(?:\S+\s+){5}${PORTS}\(${TYPE}\)* -> Continue
+  ^\d+\s+(?:\S+\s+){6}${PORTS}\(${TYPE}\)* -> Continue
+  ^\s+${PORTS}\(${TYPE}\)* -> Continue
+  ^\s+(?:\S+\s+){1}${PORTS}\(${TYPE}\)* -> Continue
+  ^\s+(?:\S+\s+){2}${PORTS}\(${TYPE}\)* -> Continue
+  ^$$

@@ -1,0 +1,26 @@
+Devices:
+    - {Name: DUT1, Device: M3000, Hostname: M3000_2, IP: 10.71.20.169, Protocol: telnet, Username: admin, Password: Dasan123456}
+    - {Name: DUT2, Device: M3000, Hostname: M3000_3, IP: 10.71.20.212, Protocol: telnet, Username: admin, Password: Dasan123456}
+    - {Name: DUT3, Device: M2400, Hostname: MLAG_DU, IP: 10.71.20.172, Protocol: telnet, Username: admin, Password: Dasan123456}
+
+Emulator: {Name: TESTER, Device: N2X, IP: 10.71.20.231, Port: 9001}
+
+Ifps:
+    - {Name: D1I1, FullName: ethernet 0/5, ShortName: eth0/5}
+    - {Name: D1I2, FullName: ethernet 0/6, ShortName: eth0/6}
+    - {Name: D1I3, FullName: ethernet 0/21, ShortName: eth0/21}
+    - {Name: D1I4, FullName: ethernet 0/2, ShortName: eth0/2}
+    - {Name: D1I5, FullName: ethernet 0/13, ShortName: eth0/13}
+    - {Name: D2I1, FullName: ethernet 0/5, ShortName: eth0/5}
+    - {Name: D2I2, FullName: ethernet 0/6, ShortName: eth0/6}
+    - {Name: D2I3, FullName: ethernet 0/21, ShortName: eth0/21}
+    - {Name: D2I4, FullName: ethernet 0/2, ShortName: eth0/2}
+    - {Name: D2I5, FullName: ethernet 0/13, ShortName: eth0/13}
+    - {Name: D3I1, FullName: gigabitethernet 2/1, ShortName: ge2/1}
+    - {Name: D3I2, FullName: gigabitethernet 2/2, ShortName: ge2/2}
+    - {Name: D3I3, FullName: gigabitethernet 2/3, ShortName: ge2/3}
+    - {Name: D3I4, FullName: gigabitethernet 2/4, ShortName: ge2/4}
+    - {Name: D3I5, FullName: gigabitethernet 1/1, ShortName: ge1/1}
+    - {Name: T1I1, FullName: 103/1, ShortName: 103/1}
+    - {Name: T1I2, FullName: 103/2, ShortName: 103/2}
+    - {Name: T1I3, FullName: 103/3, ShortName: 103/3}

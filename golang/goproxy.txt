@@ -1,0 +1,26 @@
+有时候go get包会因为GFW的原因而失败，这个时候通过goproxy就可以解决该问题了。配置方法如下：
+
+ go env -w GO111MODULE=on
+ go env -w GOPROXY=https://goproxy.cn,direct
+
+
+ 也可以通过下边的代码来实现：
+
+ package main
+
+ import (
+		 "net/http"
+		 "os"
+
+		 "github.com/goproxy/goproxy"
+)
+
+func main() {
+       g := goproxy.New()
+	   g.GoBinEnv = append(
+			   os.Environ(),
+			   "GOPROXY=https://goproxy.cn,direct", // 使用 goproxy.cn 作为上游代理
+			   "GOPRIVATE=git.example.com",         // 解决私有模块的拉取问题（比如可以配置成公司内部的代码源）
+			   )
+	   http.ListenAndServe("localhost:8080", g)
+ }

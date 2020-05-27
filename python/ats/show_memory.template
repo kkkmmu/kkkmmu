@@ -1,0 +1,80 @@
+Value MEM_TOTAL (\d+)
+Value MEM_FREE (\d+)
+Value BUFFERS (\d+)
+Value CACHED (\d+)
+Value SWAMP_CACHED (\d+)
+Value ACTIVE (\d+)
+Value INACTIVE (\d+)
+Value ACTIVE_ANON (\d+)
+Value INACTIVE_ANON (\d+)
+Value ACTIVE_FILE (\d+)
+Value INACTIVE_FILE (\d+)
+Value UNEVICTABLE (\d+)
+Value MLOCKED (\d+)
+Value HIGH_TOTAL (\d+)
+Value HIGH_FREE (\d+)
+Value LOW_TOTAL (\d+)
+Value LOW_FREE (\d+)
+Value SWAP_TOTAL (\d+)
+Value SWAP_FREE (\d+)
+Value DIRTY (\d+)
+Value WRITE_BACK (\d+)
+Value ANON_PAGES (\d+)
+Value MAPPED (\d+)
+Value SHMEM (\d+)
+Value SLAB (\d+)
+Value S_RECLAIMABLE (\d+)
+Value S_UNRECLAIM (\d+)
+Value KERNEL_STACK (\d+)
+Value PAGE_TABLES (\d+)
+Value MFS_UNSTABLE (\d+)
+Value BOUNCE (\d+)
+Value WRITE_BACK_TMP (\d+)
+Value COMMIT_LIMIT (\d+)
+Value COMMITTED_AS (\d+)
+Value VMALLOC_TOTAL (\d+)
+Value VMALLOC_USED (\d+)
+Value VMALLOC_CHUNK (\d+)
+Value MEM_STATUS_USED_PERCENT ([0-9]+(\.[0-9])?\s\%)
+Value MEM_STATUS_AVAILABLE_PERCENT ([0-9]+(\.[0-9])?\s\%)
+
+Start
+  ^MemTotal\:\s+${MEM_TOTAL}
+  ^MemFree\:\s+${MEM_FREE}
+  ^Buffers\:\s+${BUFFERS}
+  ^Cached\:\s+${CACHED}
+  ^SwapCached\:\s+${SWAMP_CACHED}
+  ^Active\:\s+${ACTIVE}
+  ^Inactive\:\s+${INACTIVE}
+  ^Active\(anon\)\:\s+${ACTIVE_ANON}
+  ^Inactive\(anon\)\:\s+${INACTIVE_ANON}
+  ^Active\(file\)\:\s+${ACTIVE_FILE}
+  ^Inactive\(file\)\:\s+${INACTIVE_FILE}
+  ^Unevictable\:\s+${UNEVICTABLE}
+  ^Mlocked\:\s+${MLOCKED}
+  ^HighTotal\:\s+${HIGH_TOTAL}
+  ^HighFree\:\s+${HIGH_FREE}
+  ^LowTotal\:\s+${LOW_TOTAL}
+  ^LowFree\:\s+${LOW_FREE}
+  ^SwapTotal\:\s+${SWAP_TOTAL}
+  ^SwapFree\:\s+${SWAP_FREE}
+  ^Dirty\:\s+${DIRTY}
+  ^Writeback\:\s+${WRITE_BACK}
+  ^AnonPages\:\s+${ANON_PAGES}
+  ^Mapped\:\s+${MAPPED}
+  ^Shmem\:\s+${SHMEM}
+  ^Slab\:\s+${SLAB}
+  ^SReclaimable\:\s+${S_RECLAIMABLE}
+  ^SUnreclaim\:\s+${S_UNRECLAIM}
+  ^KernelStack\:\s+${KERNEL_STACK}
+  ^PageTables\:\s+${PAGE_TABLES}
+  ^NFS_Unstable\:\s+${MFS_UNSTABLE}
+  ^Bounce\:\s+${BOUNCE}
+  ^WritebackTmp\:\s+${WRITE_BACK_TMP}
+  ^CommitLimit\:\s+${COMMIT_LIMIT}
+  ^Committed_AS\:\s+${COMMITTED_AS}
+  ^VmallocTotal\:\s+${VMALLOC_TOTAL}
+  ^VmallocUsed\:\s+${VMALLOC_USED}
+  ^VmallocChunk\:\s+${VMALLOC_CHUNK}
+  ^MemStatus\:\s+${MEM_STATUS_USED_PERCENT}.+used,\s${MEM_STATUS_AVAILABLE_PERCENT}
+  ^$$

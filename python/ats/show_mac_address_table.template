@@ -1,0 +1,10 @@
+Value VLAN (\d+)
+Value MAC ((\S{4}(\.))(\S{4}(\.))(\S{4}))
+Value TYPE (\S+)
+Value PORTS (\S+)
+Value INUSE (\S+)
+
+Start
+  ^(\s+)?${VLAN}\s+${MAC}\s+${TYPE}\s+${PORTS}\s+${INUSE} -> Record
+
+EO

@@ -1,0 +1,16 @@
+Value INTERFACE (\S+)
+Value List IPV6ADDR (\S+)
+Value ADMIN (up|down)
+Value OPER (up|down)
+
+Start
+  ^Interface\s+IPv6-Address\s+Admin-Status -> Interfaces
+
+Interfaces
+  ^${INTERFACE} -> Continue.Record
+  ^${INTERFACE}\s+${IPV6ADDR}\s* -> Continue
+  ^${INTERFACE}\s+${IPV6ADDR}\s+\[${ADMIN}\/${OPER}\]\s* -> Continue
+  ^\s+${IPV6ADDR}\s+\[${ADMIN}\/${OPER}\]\s* -> Continue
+  ^\s+${IPV6ADDR}\s* -> Continue
+  ^$$
+

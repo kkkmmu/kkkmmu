@@ -1,0 +1,41 @@
+SiteName: seeta
+SiteAddr: BeiJing
+Https: true
+Nginx:
+    Port: 443
+    LogPath:  "/var/log//nginx/nginx.log"
+    Path: "/opt/nginx/"
+
+#[@DUTS@]
+#{"Name": "DUT1", "Ifps": [{"Name": "D1I1"}, {"Name": "D1I2"}, {"Name" :"D1I3"}, {"Name": "D1I4"}, {"Name": "D1I5"}]}
+#{"Name": "DUT2", "Ifps": [{"Name": "D2I1"}, {"Name": "D2I2"}, {"Name" :"D2I3"}, {"Name": "D2I4"}, {"Name": "D2I5"}]}
+#{"Name": "DUT3", "Ifps": [{"Name": "D3I1"}, {"Name": "D3I2"}, {"Name" :"D3I3"}, {"Name": "D3I4"}, {"Name": "D3I5"}]}
+#[@DUTS@]
+#
+Test: 12345
+DUTS:
+    - Name: DUT1
+      Ifps: 
+       - Name: D1I1
+       - Name: D1I2
+       - Name: D1I3
+       - Name: D1I4
+       - Name: D1I5
+    - {Name: DUT2, Ifps: [{Name: D2I1}, {Name: D2I2}, {Name: D2I3}, {Name: D2I4}]}
+    - {Name: DUT3, Ifps: [{Name: D3I1}, {Name: D3I2}, {Name: D3I3}, {Name: D3I4}]}
+
+
+
+Tasks:
+    - Name: Task1
+      Routines:
+       - {Name: Hello, ID: 1}
+       - {Name: Hello1, ID: 2}
+    - Name: Task2
+      Routines:
+       - {Name: hello, ID: 1}
+       - {Name: hello1, ID: 2}
+    - Name: Task3
+      Routines:
+       - {Name: HEllo, ID: 1}
+       - {Name: HEllo1, ID: 2}

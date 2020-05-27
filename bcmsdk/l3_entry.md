@@ -1,0 +1,12 @@
+1. The L3_ENTRY table is part of the unified forwarding Table that supports IPv4 unicast, IPv4 multicast, IPv6 unicast and IPv6 multicast. This table support two types of views for providing the associated data: Traditional view and Extended view.
+    a.Traditional view - There are two types:
+        1): The L3_ENTRY_SINGLE uses single-base entry and holds associated data for an IPv4 entry type.
+        2): The L3_ENTRY_DOUBLE uses a double entry and holds associated data for an IPv6 entry type.
+        If the address is found, the entry ouputs the NEXT_HOP_INDEX that is used by INITIAL_ING_L3_NEXT_HOP， ING_L3_NEXT_HOP, and EGR_L3_NEXT_HOP tables.
+        The destination port of the packet is obtained from the INITIAL_ING_L3_NEXT_HOP table. The next-hop MAC address (MAC_DA) of the packet and the index into the EGR_L3_INTF table(which contains the router MAC address and VLAN f or the egress port) are derieved from the EGR_L3_NEXT_HOP table.
+    2. Extended view - There are two types:
+        1): L3_ENTRY_DOUBLE uses a double-base entry view and holds associated data for and IPv4 entry type.
+        2): L3_ENTRY_QUAD uses a quad-base entry view and holds associated data for and IPv6 entry type.
+        The extended view type, when used in directly attached host applications, allows routing of the packet without a nexhop entry. If the address is found, the table provides the next-hop MAC addresses, destination port, EH_QUEUE_TAG, FLEX_COUTNER controls and L3_INTF_NUM, directly, without providing the NEXT_HOP_INDEX that points to the NEXT_HOP table. The L3_INTF_NUM indices into the EGR_L3_INTF, which contains the router MAC address and VLAN for the egress port.
+
+    3. A 4-bit KEY_TYPE field specifies the type per entry. This KEY_TYPE is presented to the hash generation logic along iwith the keys. The search key for L3 table is the IP address and VRF of interest. This key is hashed to select the bucket in the table. Each entry in the selected bucket is compared to the search key to determine wheter there is a match. The output of the search is a hit or a miss. For a hit, additional data related to the switching decision is also returned. The L3 table is used to search for exact IP addresses. When a hit occures, the L3 table returns information to the ingress logic necessary to perform the routing function. It also returns a pointer, NEXT_HOP_INDEX, for lookups to the INITIAL_ING_L3_NEXT_HOP, ING_L3_NEXT_HOP, and EGR_L3_NEXT_HOP tables to acquire the destination port and next hop address.

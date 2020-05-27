@@ -1,0 +1,14 @@
+DUTS:
+    DUT1: {Name: DUT1, Ifps: [{Name: D1I1}, {Name: D1I2}, {Name: D1I3}, {Name: D1I4}, {Name: D1I5}, {Name: D1I6}, {Name: D1I7}, {Name: D1I8}, {Name: D1I9}, {Name: D1I10}, {Name: D1I11}, {Name: D1I12}, {Name: D1I13}, {Name: D1I14}, {Name: D1I15}, {Name: D1I16}, {Name: D1I17}, {Name: D1I18}, {Name: D1I19}, {Name: D1I20}, {Name: D1I21}, {Name: D1I22}, {Name: D1I23}, {Name: D1I24}]}
+    DUT2: {Name: DUT2, Ifps: [{Name: D2I1}, {Name: D2I2}, {Name: D2I3}, {Name: D2I4}, {Name: D2I5}, {Name: D2I6}, {Name: D2I7}, {Name: D2I8}, {Name: D2I9}, {Name: D2I10}, {Name: D2I11}, {Name: D2I12}, {Name: D2I13}, {Name: D2I14}, {Name: D2I15}, {Name: D2I16}, {Name: D2I17}, {Name: D2I18}, {Name: D2I19}, {Name: D2I20}, {Name: D2I21}, {Name: D2I22}, {Name: D2I23}, {Name: D2I24}]}
+    DUT3: {Name: DUT3, Ifps: [{Name: D3I1}, {Name: D3I2}, {Name: D3I3}]}
+
+Tester: {Name: TESTER, Ifps: [{Name: T1I1}, {Name: T1I2}]}
+ 
+Links:
+    - {P1: {Name: D1I1}, P2: {Name: D2I1}}
+    - {P1: {Name: D1I2}, P2: {Name: D2I2}}
+    - {P1: {Name: D1I3}, P2: {Name: D3I1}}
+    - {P1: {Name: D2I3}, P2: {Name: D3I2}}
+    - {P1: {Name: D1I4}, P2: {Name: T1I1}}
+    - {P1: {Name: D3I3}, P2: {Name: T1I2}}

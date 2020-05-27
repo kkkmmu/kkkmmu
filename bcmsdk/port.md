@@ -1,0 +1,3 @@
+1. When the packate ingresses the switch, it already has a physical port number associated with it. Then the chip should determin the packat processing port (PPP) and fetch the associaded configurations. 
+    a. The ING_DEVICE_PORT table is indexed using the physical port number and used to determin the physical nature of the port(Cascaded, loopback, HiGig2 or Ethernet). 
+    b. The properties associated with the system port are retreived from the LPORT_TABLE. In addition to fetching port related properties, this bolck is also responsible for fetching some gobal device properties held in the ING_CONFIG_64, MC_CONTROL_1, HG_PKT_SIGNATURE and CTRL_PKT_SIGNATURE registers as well for identifying packets.

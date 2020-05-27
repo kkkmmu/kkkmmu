@@ -1,0 +1,1 @@
+We use flex to generate our lexical analyzers. Where flex recognizes regular expressions, bison recognizes entire grammars. Flex divides the input stream into pieces (tokens), and then bison takes these pieces and groups them together logically.

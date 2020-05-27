@@ -1,0 +1,633 @@
+# We use 
+#
+- Name: Init
+  Enable: true
+  Routines:
+   - {Device: DUT1, Type: R, Delay: 0, API: DelVlan, Params: [130]}
+   - {Device: DUT2, Type: R, Delay: 0, API: DelVlan, Params: [130]}
+   - {Device: DUT3, Type: R, Delay: 0, API: DelVlan, Params: [130]}
+   - {Device: DUT1, Type: R, Delay: 0, API: DelMlag, Params: [1, 1]}
+   - {Device: DUT2, Type: R, Delay: 0, API: DelMlag, Params: [1, 1]}
+   - {Device: DUT1, Type: R, Delay: 0, API: DelMlagAll, Params: []}
+   - {Device: DUT2, Type: R, Delay: 0, API: DelMlagAll, Params: []}
+   - {Device: DUT1, Type: R, Delay: 0, API: DelLacpInterface, Params: [1]}
+   - {Device: DUT2, Type: R, Delay: 0, API: DelLacpInterface, Params: [1]}
+   - {Device: DUT3, Type: R, Delay: 0, API: DelLacpInterface, Params: [1]}
+   - {Device: DUT1, Type: R, Delay: 0, API: DelLacpInterfaceAll, Params: []}
+   - {Device: DUT2, Type: R, Delay: 0, API: DelLacpInterfaceAll, Params: []}
+   - {Device: DUT3, Type: R, Delay: 0, API: DelLacpInterfaceAll, Params: []}
+   - {Device: DUT1, Type: R, Delay: 0, API: DelMcecDomainDataLink, Params: [D1I2]}
+   - {Device: DUT2, Type: R, Delay: 0, API: DelMcecDomainDataLink, Params: [D2I2]}
+   - {Device: DUT1, Type: R, Delay: 0, API: DelMcecIntraDomainLink, Params: [D1I1]}
+   - {Device: DUT2, Type: R, Delay: 0, API: DelMcecIntraDomainLink, Params: [D2I1]}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsVlanExist, Params: [130], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsVlanExist, Params: [130], Expect: false}
+   - {Device: DUT3, Type: A, Delay: 0, API: IsVlanExist, Params: [130], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsMlagExist, Params: [1], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsMlagExist, Params: [1], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D1I3, 1], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D2I3, 1], Expect: false}
+   - {Device: DUT3, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D3I1, 1], Expect: false}
+   - {Device: DUT3, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D3I2, 1], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [1], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [5], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [6], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [7], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [8], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [9], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [10], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [11], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [12], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [13], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [14], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [15], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [16], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [17], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [18], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [19], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [20], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [21], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [22], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [23], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [24], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [1], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [5], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [6], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [7], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [8], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [9], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [10], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [11], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [12], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [13], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [14], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [15], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [16], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [17], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [18], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [19], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [20], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [21], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [22], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [23], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [24], Expect: false}
+   - {Device: DUT3, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [1], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D1I3, 1], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D1I5, 5], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D1I6, 6], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D1I7, 7], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D1I8, 8], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D1I9, 9], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D1I10, 10], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D1I11, 11], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D1I12, 12], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D1I13, 13], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D1I14, 14], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D1I15, 15], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D1I16, 16], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D1I17, 17], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D1I18, 18], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D1I19, 19], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D1I20, 20], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D1I21, 21], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D1I22, 22], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D1I23, 23], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D1I24, 24], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D2I3, 1], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D2I5, 5], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D2I6, 6], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D2I7, 7], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D2I8, 8], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D2I9, 9], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D2I10, 10], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D2I11, 11], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D2I12, 12], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D2I13, 13], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D2I14, 14], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D2I15, 15], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D2I16, 16], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D2I17, 17], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D2I18, 18], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D2I19, 19], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D2I20, 20], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D2I21, 21], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D2I22, 22], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D2I23, 23], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D2I24, 24], Expect: false}
+   - {Device: DUT3, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D3I1, 1], Expect: false}
+   - {Device: DUT3, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D3I2, 1], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceMlagIntraDomainLink, Params: [D1I1], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceMlagDomainDataLink, Params: [D1I2], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceMlagIntraDomainLink, Params: [D2I1], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceMlagDomainDataLink, Params: [D2I2], Expect: false}
+
+- Name: Set All Interface Up
+  Enable: true
+  Routines:
+   - {Device: DUT1, Type: R, Delay: 0, API: SetInterfaceUp, Params: [D1I1]}
+   - {Device: DUT1, Type: R, Delay: 0, API: SetInterfaceUp, Params: [D1I2]}
+   - {Device: DUT1, Type: R, Delay: 0, API: SetInterfaceUp, Params: [D1I3]}
+   - {Device: DUT1, Type: R, Delay: 0, API: SetInterfaceUp, Params: [D1I4]}
+   - {Device: DUT1, Type: R, Delay: 0, API: SetInterfaceUp, Params: [D1I5]}
+   - {Device: DUT1, Type: R, Delay: 0, API: SetInterfaceUp, Params: [D1I6]}
+   - {Device: DUT1, Type: R, Delay: 0, API: SetInterfaceUp, Params: [D1I7]}
+   - {Device: DUT1, Type: R, Delay: 0, API: SetInterfaceUp, Params: [D1I8]}
+   - {Device: DUT1, Type: R, Delay: 0, API: SetInterfaceUp, Params: [D1I9]}
+   - {Device: DUT1, Type: R, Delay: 0, API: SetInterfaceUp, Params: [D1I10]}
+   - {Device: DUT1, Type: R, Delay: 0, API: SetInterfaceUp, Params: [D1I11]}
+   - {Device: DUT1, Type: R, Delay: 0, API: SetInterfaceUp, Params: [D1I12]}
+   - {Device: DUT1, Type: R, Delay: 0, API: SetInterfaceUp, Params: [D1I13]}
+   - {Device: DUT1, Type: R, Delay: 0, API: SetInterfaceUp, Params: [D1I14]}
+   - {Device: DUT1, Type: R, Delay: 0, API: SetInterfaceUp, Params: [D1I15]}
+   - {Device: DUT1, Type: R, Delay: 0, API: SetInterfaceUp, Params: [D1I16]}
+   - {Device: DUT1, Type: R, Delay: 0, API: SetInterfaceUp, Params: [D1I17]}
+   - {Device: DUT1, Type: R, Delay: 0, API: SetInterfaceUp, Params: [D1I18]}
+   - {Device: DUT1, Type: R, Delay: 0, API: SetInterfaceUp, Params: [D1I19]}
+   - {Device: DUT1, Type: R, Delay: 0, API: SetInterfaceUp, Params: [D1I20]}
+   - {Device: DUT1, Type: R, Delay: 0, API: SetInterfaceUp, Params: [D1I21]}
+   - {Device: DUT1, Type: R, Delay: 0, API: SetInterfaceUp, Params: [D1I22]}
+   - {Device: DUT1, Type: R, Delay: 0, API: SetInterfaceUp, Params: [D1I23]}
+   - {Device: DUT1, Type: R, Delay: 0, API: SetInterfaceUp, Params: [D1I24]}
+   - {Device: DUT2, Type: R, Delay: 0, API: SetInterfaceUp, Params: [D2I1]}
+   - {Device: DUT2, Type: R, Delay: 0, API: SetInterfaceUp, Params: [D2I2]}
+   - {Device: DUT2, Type: R, Delay: 0, API: SetInterfaceUp, Params: [D2I3]}
+   - {Device: DUT2, Type: R, Delay: 0, API: SetInterfaceUp, Params: [D2I4]}
+   - {Device: DUT2, Type: R, Delay: 0, API: SetInterfaceUp, Params: [D2I5]}
+   - {Device: DUT2, Type: R, Delay: 0, API: SetInterfaceUp, Params: [D2I6]}
+   - {Device: DUT2, Type: R, Delay: 0, API: SetInterfaceUp, Params: [D2I7]}
+   - {Device: DUT2, Type: R, Delay: 0, API: SetInterfaceUp, Params: [D2I8]}
+   - {Device: DUT2, Type: R, Delay: 0, API: SetInterfaceUp, Params: [D2I9]}
+   - {Device: DUT2, Type: R, Delay: 0, API: SetInterfaceUp, Params: [D2I10]}
+   - {Device: DUT2, Type: R, Delay: 0, API: SetInterfaceUp, Params: [D2I11]}
+   - {Device: DUT2, Type: R, Delay: 0, API: SetInterfaceUp, Params: [D2I12]}
+   - {Device: DUT2, Type: R, Delay: 0, API: SetInterfaceUp, Params: [D2I13]}
+   - {Device: DUT2, Type: R, Delay: 0, API: SetInterfaceUp, Params: [D2I14]}
+   - {Device: DUT2, Type: R, Delay: 0, API: SetInterfaceUp, Params: [D2I15]}
+   - {Device: DUT2, Type: R, Delay: 0, API: SetInterfaceUp, Params: [D2I16]}
+   - {Device: DUT2, Type: R, Delay: 0, API: SetInterfaceUp, Params: [D2I17]}
+   - {Device: DUT2, Type: R, Delay: 0, API: SetInterfaceUp, Params: [D2I18]}
+   - {Device: DUT2, Type: R, Delay: 0, API: SetInterfaceUp, Params: [D2I19]}
+   - {Device: DUT2, Type: R, Delay: 0, API: SetInterfaceUp, Params: [D2I20]}
+   - {Device: DUT2, Type: R, Delay: 0, API: SetInterfaceUp, Params: [D2I21]}
+   - {Device: DUT2, Type: R, Delay: 0, API: SetInterfaceUp, Params: [D2I22]}
+   - {Device: DUT2, Type: R, Delay: 0, API: SetInterfaceUp, Params: [D2I23]}
+   - {Device: DUT2, Type: R, Delay: 0, API: SetInterfaceUp, Params: [D2I24]}
+   - {Device: DUT3, Type: R, Delay: 0, API: SetInterfaceUp, Params: [D3I1]}
+   - {Device: DUT3, Type: R, Delay: 0, API: SetInterfaceUp, Params: [D3I2]}
+
+- Name: Set All other interface as switchport
+  Enable: true
+  Routines:
+   - {Device: DUT1, Type: R, Delay: 0, API: SetInterfaceTypeL2, Params: [D1I5]}
+   - {Device: DUT1, Type: R, Delay: 0, API: SetInterfaceTypeL2, Params: [D1I6]}
+   - {Device: DUT1, Type: R, Delay: 0, API: SetInterfaceTypeL2, Params: [D1I7]}
+   - {Device: DUT1, Type: R, Delay: 0, API: SetInterfaceTypeL2, Params: [D1I8]}
+   - {Device: DUT1, Type: R, Delay: 0, API: SetInterfaceTypeL2, Params: [D1I9]}
+   - {Device: DUT1, Type: R, Delay: 0, API: SetInterfaceTypeL2, Params: [D1I10]}
+   - {Device: DUT1, Type: R, Delay: 0, API: SetInterfaceTypeL2, Params: [D1I11]}
+   - {Device: DUT1, Type: R, Delay: 0, API: SetInterfaceTypeL2, Params: [D1I12]}
+   - {Device: DUT1, Type: R, Delay: 0, API: SetInterfaceTypeL2, Params: [D1I13]}
+   - {Device: DUT1, Type: R, Delay: 0, API: SetInterfaceTypeL2, Params: [D1I14]}
+   - {Device: DUT1, Type: R, Delay: 0, API: SetInterfaceTypeL2, Params: [D1I15]}
+   - {Device: DUT1, Type: R, Delay: 0, API: SetInterfaceTypeL2, Params: [D1I16]}
+   - {Device: DUT1, Type: R, Delay: 0, API: SetInterfaceTypeL2, Params: [D1I17]}
+   - {Device: DUT1, Type: R, Delay: 0, API: SetInterfaceTypeL2, Params: [D1I18]}
+   - {Device: DUT1, Type: R, Delay: 0, API: SetInterfaceTypeL2, Params: [D1I19]}
+   - {Device: DUT1, Type: R, Delay: 0, API: SetInterfaceTypeL2, Params: [D1I20]}
+   - {Device: DUT1, Type: R, Delay: 0, API: SetInterfaceTypeL2, Params: [D1I21]}
+   - {Device: DUT1, Type: R, Delay: 0, API: SetInterfaceTypeL2, Params: [D1I22]}
+   - {Device: DUT1, Type: R, Delay: 0, API: SetInterfaceTypeL2, Params: [D1I23]}
+   - {Device: DUT1, Type: R, Delay: 0, API: SetInterfaceTypeL2, Params: [D1I24]}
+   - {Device: DUT2, Type: R, Delay: 0, API: SetInterfaceTypeL2, Params: [D2I5]}
+   - {Device: DUT2, Type: R, Delay: 0, API: SetInterfaceTypeL2, Params: [D2I6]}
+   - {Device: DUT2, Type: R, Delay: 0, API: SetInterfaceTypeL2, Params: [D2I7]}
+   - {Device: DUT2, Type: R, Delay: 0, API: SetInterfaceTypeL2, Params: [D2I8]}
+   - {Device: DUT2, Type: R, Delay: 0, API: SetInterfaceTypeL2, Params: [D2I9]}
+   - {Device: DUT2, Type: R, Delay: 0, API: SetInterfaceTypeL2, Params: [D2I10]}
+   - {Device: DUT2, Type: R, Delay: 0, API: SetInterfaceTypeL2, Params: [D2I11]}
+   - {Device: DUT2, Type: R, Delay: 0, API: SetInterfaceTypeL2, Params: [D2I12]}
+   - {Device: DUT2, Type: R, Delay: 0, API: SetInterfaceTypeL2, Params: [D2I13]}
+   - {Device: DUT2, Type: R, Delay: 0, API: SetInterfaceTypeL2, Params: [D2I14]}
+   - {Device: DUT2, Type: R, Delay: 0, API: SetInterfaceTypeL2, Params: [D2I15]}
+   - {Device: DUT2, Type: R, Delay: 0, API: SetInterfaceTypeL2, Params: [D2I16]}
+   - {Device: DUT2, Type: R, Delay: 0, API: SetInterfaceTypeL2, Params: [D2I17]}
+   - {Device: DUT2, Type: R, Delay: 0, API: SetInterfaceTypeL2, Params: [D2I18]}
+   - {Device: DUT2, Type: R, Delay: 0, API: SetInterfaceTypeL2, Params: [D2I19]}
+   - {Device: DUT2, Type: R, Delay: 0, API: SetInterfaceTypeL2, Params: [D2I20]}
+   - {Device: DUT2, Type: R, Delay: 0, API: SetInterfaceTypeL2, Params: [D2I21]}
+   - {Device: DUT2, Type: R, Delay: 0, API: SetInterfaceTypeL2, Params: [D2I22]}
+   - {Device: DUT2, Type: R, Delay: 0, API: SetInterfaceTypeL2, Params: [D2I23]}
+   - {Device: DUT2, Type: R, Delay: 0, API: SetInterfaceTypeL2, Params: [D2I24]}
+
+- Name: Check All Interface Status
+  Enable: true
+  Routines:
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceUp, Params: [D1I1], Expect: true}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceUp, Params: [D1I2], Expect: true}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceUp, Params: [D1I3], Expect: true}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceRunning, Params: [D1I1], Expect: true}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceRunning, Params: [D1I2], Expect: true}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceRunning, Params: [D1I3], Expect: true}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceUp, Params: [D2I1], Expect: true}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceUp, Params: [D2I2], Expect: true}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceUp, Params: [D2I3], Expect: true}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceRunning, Params: [D2I1], Expect: true}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceRunning, Params: [D2I2], Expect: true}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceRunning, Params: [D2I3], Expect: true}
+   - {Device: DUT3, Type: A, Delay: 0, API: IsInterfaceUp, Params: [D3I1], Expect: true}
+   - {Device: DUT3, Type: A, Delay: 0, API: IsInterfaceUp, Params: [D3I2], Expect: true}
+   - {Device: DUT3, Type: A, Delay: 0, API: IsInterfaceRunning, Params: [D3I1], Expect: true}
+   - {Device: DUT3, Type: A, Delay: 0, API: IsInterfaceRunning, Params: [D3I2], Expect: true}
+
+- Name: Basic Vlan Configuration Set Up
+  Enable: true
+  Routines:
+   - {Device: DUT1, Type: R, Delay: 0, API: AddVlan, Params: [130]}
+   - {Device: DUT2, Type: R, Delay: 0, API: AddVlan, Params: [130]}
+   - {Device: DUT3, Type: R, Delay: 0, API: AddVlan, Params: [130]}
+   - {Device: DUT1, Type: R, Delay: 0, API: AddInterfaceToVlan, Params: [D1I3, 130, false]}
+   - {Device: DUT2, Type: R, Delay: 0, API: AddInterfaceToVlan, Params: [D2I3, 130, false]}
+   - {Device: DUT3, Type: R, Delay: 0, API: AddInterfaceToVlan, Params: [D3I1, 130, false]}
+   - {Device: DUT3, Type: R, Delay: 0, API: AddInterfaceToVlan, Params: [D3I2, 130, false]}
+
+- Name: Check Vlan configuration
+  Enable: true
+  Routines:
+   - {Device: DUT1, Type: A, Delay: 0, API: IsVlanExist, Params: [130], Expect: true}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsVlanExist, Params: [130], Expect: true}
+   - {Device: DUT3, Type: A, Delay: 0, API: IsVlanExist, Params: [130], Expect: true}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceVlanMember, Params: [D1I3, 130], Expect: true}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceVlanMember, Params: [D2I3, 130], Expect: true}
+   - {Device: DUT3, Type: A, Delay: 0, API: IsInterfaceVlanMember, Params: [D3I1, 130], Expect: true}
+   - {Device: DUT3, Type: A, Delay: 0, API: IsInterfaceVlanMember, Params: [D3I2, 130], Expect: true}
+
+- Name: Basic LACP Configuration
+  Enable: true
+  Routines:
+   - {Device: DUT1, Type: R, Delay: 0, API: AddLacpInterface, Params: [1]}
+   - {Device: DUT2, Type: R, Delay: 0, API: AddLacpInterface, Params: [1]}
+   - {Device: DUT3, Type: R, Delay: 0, API: AddLacpInterface, Params: [1]}
+   - {Device: DUT1, Type: R, Delay: 0, API: AddLacpMember, Params: [D1I3, 1]}
+   - {Device: DUT1, Type: R, Delay: 0, API: AddLacpMember, Params: [D1I5, 5]}
+   - {Device: DUT1, Type: R, Delay: 0, API: AddLacpMember, Params: [D1I6, 6]}
+   - {Device: DUT1, Type: R, Delay: 0, API: AddLacpMember, Params: [D1I7, 7]}
+   - {Device: DUT1, Type: R, Delay: 0, API: AddLacpMember, Params: [D1I8, 8]}
+   - {Device: DUT1, Type: R, Delay: 0, API: AddLacpMember, Params: [D1I9, 9]}
+   - {Device: DUT1, Type: R, Delay: 0, API: AddLacpMember, Params: [D1I10, 10]}
+   - {Device: DUT1, Type: R, Delay: 0, API: AddLacpMember, Params: [D1I11, 11]}
+   - {Device: DUT1, Type: R, Delay: 0, API: AddLacpMember, Params: [D1I12, 12]}
+   - {Device: DUT1, Type: R, Delay: 0, API: AddLacpMember, Params: [D1I13, 13]}
+   - {Device: DUT1, Type: R, Delay: 0, API: AddLacpMember, Params: [D1I14, 14]}
+   - {Device: DUT1, Type: R, Delay: 0, API: AddLacpMember, Params: [D1I15, 15]}
+   - {Device: DUT1, Type: R, Delay: 0, API: AddLacpMember, Params: [D1I16, 16]}
+   - {Device: DUT1, Type: R, Delay: 0, API: AddLacpMember, Params: [D1I17, 17]}
+   - {Device: DUT1, Type: R, Delay: 0, API: AddLacpMember, Params: [D1I18, 18]}
+   - {Device: DUT1, Type: R, Delay: 0, API: AddLacpMember, Params: [D1I19, 19]}
+   - {Device: DUT1, Type: R, Delay: 0, API: AddLacpMember, Params: [D1I20, 20]}
+   - {Device: DUT1, Type: R, Delay: 0, API: AddLacpMember, Params: [D1I21, 21]}
+   - {Device: DUT1, Type: R, Delay: 0, API: AddLacpMember, Params: [D1I22, 22]}
+   - {Device: DUT1, Type: R, Delay: 0, API: AddLacpMember, Params: [D1I23, 23]}
+   - {Device: DUT1, Type: R, Delay: 0, API: AddLacpMember, Params: [D1I24, 24]}
+   - {Device: DUT2, Type: R, Delay: 0, API: AddLacpMember, Params: [D2I3, 1]}
+   - {Device: DUT2, Type: R, Delay: 0, API: AddLacpMember, Params: [D2I5, 5]}
+   - {Device: DUT2, Type: R, Delay: 0, API: AddLacpMember, Params: [D2I6, 6]}
+   - {Device: DUT2, Type: R, Delay: 0, API: AddLacpMember, Params: [D2I7, 7]}
+   - {Device: DUT2, Type: R, Delay: 0, API: AddLacpMember, Params: [D2I8, 8]}
+   - {Device: DUT2, Type: R, Delay: 0, API: AddLacpMember, Params: [D2I9, 9]}
+   - {Device: DUT2, Type: R, Delay: 0, API: AddLacpMember, Params: [D2I10, 10]}
+   - {Device: DUT2, Type: R, Delay: 0, API: AddLacpMember, Params: [D2I11, 11]}
+   - {Device: DUT2, Type: R, Delay: 0, API: AddLacpMember, Params: [D2I12, 12]}
+   - {Device: DUT2, Type: R, Delay: 0, API: AddLacpMember, Params: [D2I13, 13]}
+   - {Device: DUT2, Type: R, Delay: 0, API: AddLacpMember, Params: [D2I14, 14]}
+   - {Device: DUT2, Type: R, Delay: 0, API: AddLacpMember, Params: [D2I15, 15]}
+   - {Device: DUT2, Type: R, Delay: 0, API: AddLacpMember, Params: [D2I16, 16]}
+   - {Device: DUT2, Type: R, Delay: 0, API: AddLacpMember, Params: [D2I17, 17]}
+   - {Device: DUT2, Type: R, Delay: 0, API: AddLacpMember, Params: [D2I18, 18]}
+   - {Device: DUT2, Type: R, Delay: 0, API: AddLacpMember, Params: [D2I19, 19]}
+   - {Device: DUT2, Type: R, Delay: 0, API: AddLacpMember, Params: [D2I20, 20]}
+   - {Device: DUT2, Type: R, Delay: 0, API: AddLacpMember, Params: [D2I21, 21]}
+   - {Device: DUT2, Type: R, Delay: 0, API: AddLacpMember, Params: [D2I22, 22]}
+   - {Device: DUT2, Type: R, Delay: 0, API: AddLacpMember, Params: [D2I23, 23]}
+   - {Device: DUT2, Type: R, Delay: 0, API: AddLacpMember, Params: [D2I24, 24]}
+   - {Device: DUT3, Type: R, Delay: 0, API: AddLacpMember, Params: [D3I1, 1]}
+   - {Device: DUT3, Type: R, Delay: 0, API: AddLacpMember, Params: [D3I2, 1]}
+
+- Name: Check Basic LACP status
+  Enable: true
+  Routines:
+   - {Device: DUT1, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [1], Expect: true}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [5], Expect: true}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [6], Expect: true}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [7], Expect: true}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [8], Expect: true}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [9], Expect: true}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [10], Expect: true}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [11], Expect: true}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [12], Expect: true}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [13], Expect: true}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [14], Expect: true}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [15], Expect: true}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [16], Expect: true}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [17], Expect: true}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [18], Expect: true}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [19], Expect: true}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [20], Expect: true}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [21], Expect: true}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [22], Expect: true}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [23], Expect: true}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [24], Expect: true}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [1], Expect: true}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [5], Expect: true}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [6], Expect: true}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [7], Expect: true}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [8], Expect: true}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [9], Expect: true}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [10], Expect: true}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [11], Expect: true}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [12], Expect: true}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [13], Expect: true}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [14], Expect: true}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [15], Expect: true}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [16], Expect: true}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [17], Expect: true}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [18], Expect: true}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [19], Expect: true}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [20], Expect: true}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [21], Expect: true}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [22], Expect: true}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [23], Expect: true}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [24], Expect: true}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D1I3, 1], Expect: true}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D1I5, 5], Expect: true}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D1I6, 6], Expect: true}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D1I7, 7], Expect: true}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D1I8, 8], Expect: true}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D1I9, 9], Expect: true}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D1I10, 10], Expect: true}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D1I11, 11], Expect: true}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D1I12, 12], Expect: true}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D1I13, 13], Expect: true}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D1I14, 14], Expect: true}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D1I15, 15], Expect: true}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D1I16, 16], Expect: true}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D1I17, 17], Expect: true}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D1I18, 18], Expect: true}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D1I19, 19], Expect: true}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D1I20, 20], Expect: true}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D1I21, 21], Expect: true}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D1I22, 22], Expect: true}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D1I23, 23], Expect: true}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D1I24, 24], Expect: true}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D2I3, 1], Expect: true}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D2I5, 5], Expect: true}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D2I6, 6], Expect: true}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D2I7, 7], Expect: true}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D2I8, 8], Expect: true}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D2I9, 9], Expect: true}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D2I10, 10], Expect: true}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D2I11, 11], Expect: true}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D2I12, 12], Expect: true}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D2I13, 13], Expect: true}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D2I14, 14], Expect: true}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D2I15, 15], Expect: true}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D2I16, 16], Expect: true}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D2I17, 17], Expect: true}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D2I18, 18], Expect: true}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D2I19, 19], Expect: true}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D2I20, 20], Expect: true}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D2I21, 21], Expect: true}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D2I22, 22], Expect: true}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D2I23, 23], Expect: true}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D2I24, 24], Expect: true}
+   - {Device: DUT3, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D3I1, 1], Expect: true}
+   - {Device: DUT3, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D3I2, 1], Expect: true}
+
+- Name: Set Mcec intra domain Link
+  Enable: true
+  Routines:
+   - {Device: DUT1, Type: R, Delay: 0, API: AddMcecIntraDomainLink, Params: [D1I1]}
+   - {Device: DUT2, Type: R, Delay: 0, API: AddMcecIntraDomainLink, Params: [D2I1]}
+   - {Device: DUT1, Type: R, Delay: 0, API: AddMcecDomainDataLink, Params: [D1I2]}
+   - {Device: DUT2, Type: R, Delay: 0, API: AddMcecDomainDataLink, Params: [D2I2]}
+
+- Name: Check Mcec domain Status
+  Enable: true
+  Routines: 
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceMlagIntraDomainLink, Params: [D1I1], Expect: true}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceMlagDomainDataLink, Params: [D1I2], Expect: true}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceMlagIntraDomainLink, Params: [D2I1], Expect: true}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceMlagDomainDataLink, Params: [D2I2], Expect: true}
+   - {Device: DUT1, Type: A, Delay: 1, API: IsMlagDomainInSync, Expect: true}
+   - {Device: DUT2, Type: A, Delay: 1, API: IsMlagDomainInSync, Expect: true}
+
+- Name: Mlag configuration
+  Enable: true
+  Routines:
+   - {Device: DUT1, Type: R, Delay: 0, API: AddMlag, Params: [1, 1]}
+   - {Device: DUT1, Type: R, Delay: 0, API: AddMlag, Params: [5, 5]}
+   - {Device: DUT1, Type: R, Delay: 0, API: AddMlag, Params: [6, 6]}
+   - {Device: DUT1, Type: R, Delay: 0, API: AddMlag, Params: [7, 7]}
+   - {Device: DUT1, Type: R, Delay: 0, API: AddMlag, Params: [8, 8]}
+   - {Device: DUT1, Type: R, Delay: 0, API: AddMlag, Params: [9, 9]}
+   - {Device: DUT1, Type: R, Delay: 0, API: AddMlag, Params: [10, 10]}
+   - {Device: DUT1, Type: R, Delay: 0, API: AddMlag, Params: [11, 11]}
+   - {Device: DUT1, Type: R, Delay: 0, API: AddMlag, Params: [12, 12]}
+   - {Device: DUT1, Type: R, Delay: 0, API: AddMlag, Params: [13, 13]}
+   - {Device: DUT1, Type: R, Delay: 0, API: AddMlag, Params: [14, 14]}
+   - {Device: DUT1, Type: R, Delay: 0, API: AddMlag, Params: [15, 15]}
+   - {Device: DUT1, Type: R, Delay: 0, API: AddMlag, Params: [16, 16]}
+   - {Device: DUT1, Type: R, Delay: 0, API: AddMlag, Params: [17, 17]}
+   - {Device: DUT1, Type: R, Delay: 0, API: AddMlag, Params: [18, 18]}
+   - {Device: DUT1, Type: R, Delay: 0, API: AddMlag, Params: [19, 19]}
+   - {Device: DUT1, Type: R, Delay: 0, API: AddMlag, Params: [20, 20]}
+   - {Device: DUT1, Type: R, Delay: 0, API: AddMlag, Params: [21, 21]}
+   - {Device: DUT1, Type: R, Delay: 0, API: AddMlag, Params: [22, 22]}
+   - {Device: DUT1, Type: R, Delay: 0, API: AddMlag, Params: [23, 23]}
+   - {Device: DUT1, Type: R, Delay: 0, API: AddMlag, Params: [24, 24]}
+   - {Device: DUT2, Type: R, Delay: 0, API: AddMlag, Params: [1, 1]}
+   - {Device: DUT2, Type: R, Delay: 0, API: AddMlag, Params: [5, 5]}
+   - {Device: DUT2, Type: R, Delay: 0, API: AddMlag, Params: [6, 6]}
+   - {Device: DUT2, Type: R, Delay: 0, API: AddMlag, Params: [7, 7]}
+   - {Device: DUT2, Type: R, Delay: 0, API: AddMlag, Params: [8, 8]}
+   - {Device: DUT2, Type: R, Delay: 0, API: AddMlag, Params: [9, 9]}
+   - {Device: DUT2, Type: R, Delay: 0, API: AddMlag, Params: [10, 10]}
+   - {Device: DUT2, Type: R, Delay: 0, API: AddMlag, Params: [11, 11]}
+   - {Device: DUT2, Type: R, Delay: 0, API: AddMlag, Params: [12, 12]}
+   - {Device: DUT2, Type: R, Delay: 0, API: AddMlag, Params: [13, 13]}
+   - {Device: DUT2, Type: R, Delay: 0, API: AddMlag, Params: [14, 14]}
+   - {Device: DUT2, Type: R, Delay: 0, API: AddMlag, Params: [15, 15]}
+   - {Device: DUT2, Type: R, Delay: 0, API: AddMlag, Params: [16, 16]}
+   - {Device: DUT2, Type: R, Delay: 0, API: AddMlag, Params: [17, 17]}
+   - {Device: DUT2, Type: R, Delay: 0, API: AddMlag, Params: [18, 18]}
+   - {Device: DUT2, Type: R, Delay: 0, API: AddMlag, Params: [19, 19]}
+   - {Device: DUT2, Type: R, Delay: 0, API: AddMlag, Params: [20, 20]}
+   - {Device: DUT2, Type: R, Delay: 0, API: AddMlag, Params: [21, 21]}
+   - {Device: DUT2, Type: R, Delay: 0, API: AddMlag, Params: [22, 22]}
+   - {Device: DUT2, Type: R, Delay: 0, API: AddMlag, Params: [23, 23]}
+   - {Device: DUT2, Type: R, Delay: 0, API: AddMlag, Params: [24, 24]}
+
+
+- Name: Check Mlag interface Status
+  Enable: true
+  Routines:
+   - {Device: DUT1, Type: A, Delay: 2, API: IsLacpMemberInSync, Params: [1, D1I3], Expect: true}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsLacpMemberInSync, Params: [1, D2I3], Expect: true}
+   - {Device: DUT3, Type: A, Delay: 0, API: IsLacpMemberInSync, Params: [1, D3I1], Expect: true}
+   - {Device: DUT3, Type: A, Delay: 0, API: IsLacpMemberInSync, Params: [1, D3I2], Expect: true}
+   - {Device: DUT1, Type: A, Delay: 2, API: IsInterfaceMlagLocalMember, Params: [D1I3, 1], Expect: true}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceMlagLocalMember, Params: [D2I3, 1], Expect: true}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceMlagRemoteMember, Params: [D1I3, 1], Expect: true}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceMlagRemoteMember, Params: [D2I3, 1], Expect: true}
+
+- Name: Deinit
+  Enable: false
+  Routines:
+   - {Device: DUT1, Type: R, Delay: 0, API: DelVlan, Params: [130]}
+   - {Device: DUT2, Type: R, Delay: 0, API: DelVlan, Params: [130]}
+   - {Device: DUT3, Type: R, Delay: 0, API: DelVlan, Params: [130]}
+   - {Device: DUT1, Type: R, Delay: 0, API: DelMlagAll, Params: []}
+   - {Device: DUT2, Type: R, Delay: 0, API: DelMlagAll, Params: []}
+   - {Device: DUT1, Type: R, Delay: 0, API: DelLacpInterfaceAll, Params: []}
+   - {Device: DUT2, Type: R, Delay: 0, API: DelLacpInterfaceAll, Params: []}
+   - {Device: DUT3, Type: R, Delay: 0, API: DelLacpInterfaceAll, Params: []}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsVlanExist, Params: [130], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsVlanExist, Params: [130], Expect: false}
+   - {Device: DUT3, Type: A, Delay: 0, API: IsVlanExist, Params: [130], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsMlagExist, Params: [1], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsMlagExist, Params: [5], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsMlagExist, Params: [6], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsMlagExist, Params: [7], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsMlagExist, Params: [8], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsMlagExist, Params: [9], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsMlagExist, Params: [10], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsMlagExist, Params: [11], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsMlagExist, Params: [12], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsMlagExist, Params: [13], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsMlagExist, Params: [14], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsMlagExist, Params: [15], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsMlagExist, Params: [16], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsMlagExist, Params: [17], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsMlagExist, Params: [18], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsMlagExist, Params: [19], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsMlagExist, Params: [20], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsMlagExist, Params: [21], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsMlagExist, Params: [22], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsMlagExist, Params: [23], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsMlagExist, Params: [24], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsMlagExist, Params: [1], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsMlagExist, Params: [5], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsMlagExist, Params: [6], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsMlagExist, Params: [7], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsMlagExist, Params: [8], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsMlagExist, Params: [9], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsMlagExist, Params: [10], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsMlagExist, Params: [11], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsMlagExist, Params: [12], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsMlagExist, Params: [13], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsMlagExist, Params: [14], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsMlagExist, Params: [15], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsMlagExist, Params: [16], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsMlagExist, Params: [17], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsMlagExist, Params: [18], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsMlagExist, Params: [19], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsMlagExist, Params: [20], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsMlagExist, Params: [21], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsMlagExist, Params: [22], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsMlagExist, Params: [23], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsMlagExist, Params: [24], Expect: false}
+   - {Device: DUT1, Type: R, Delay: 0, API: DelMcecDomainDataLink, Params: [D1I2]}
+   - {Device: DUT2, Type: R, Delay: 0, API: DelMcecDomainDataLink, Params: [D2I2]}
+   - {Device: DUT1, Type: R, Delay: 0, API: DelMcecIntraDomainLink, Params: [D1I1]}
+   - {Device: DUT2, Type: R, Delay: 0, API: DelMcecIntraDomainLink, Params: [D2I1]}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [1], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [5], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [6], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [7], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [8], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [9], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [10], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [11], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [12], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [13], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [14], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [15], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [16], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [17], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [18], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [19], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [20], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [21], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [22], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [23], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [24], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [1], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [5], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [6], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [7], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [8], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [9], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [10], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [11], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [12], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [13], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [14], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [15], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [16], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [17], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [18], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [19], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [20], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [21], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [22], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [23], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [24], Expect: false}
+   - {Device: DUT3, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [1], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D1I3, 1], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D1I5, 5], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D1I6, 6], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D1I7, 7], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D1I8, 8], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D1I9, 9], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D1I10, 10], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D1I11, 11], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D1I12, 12], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D1I13, 13], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D1I14, 14], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D1I15, 15], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D1I16, 16], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D1I17, 17], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D1I18, 18], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D1I19, 19], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D1I20, 20], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D1I21, 21], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D1I22, 22], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D1I23, 23], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D1I24, 24], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D2I3, 1], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D2I5, 5], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D2I6, 6], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D2I7, 7], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D2I8, 8], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D2I9, 9], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D2I10, 10], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D2I11, 11], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D2I12, 12], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D2I13, 13], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D2I14, 14], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D2I15, 15], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D2I16, 16], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D2I17, 17], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D2I18, 18], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D2I19, 19], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D2I20, 20], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D2I21, 21], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D2I22, 22], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D2I23, 23], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D2I24, 24], Expect: false}
+   - {Device: DUT3, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D3I1, 1], Expect: false}
+   - {Device: DUT3, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D3I2, 1], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceMlagIntraDomainLink, Params: [D1I1], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceMlagDomainDataLink, Params: [D1I2], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceMlagIntraDomainLink, Params: [D2I1], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceMlagDomainDataLink, Params: [D2I2], Expect: false}
+

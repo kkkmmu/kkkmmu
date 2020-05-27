@@ -1,0 +1,2 @@
+- {Module: MLAG, Name: MLAG_SINGLE_DU, Enable: true, Case: false}
+- {Module: MLAG, Name: MLAG_MULTIPLE_DU, Enable: true, Case: false}

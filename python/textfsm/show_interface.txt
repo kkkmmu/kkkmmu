@@ -1,0 +1,57 @@
+Interface GigabitEthernet0/0 "inside", is up, line protocol is up
+  Hardware is i82540EM rev02, BW 1000 Mbps, DLY 10 usec
+    Auto-Duplex(Full-duplex), Auto-Speed(1000 Mbps)
+    Input flow control is unsupported, output flow control is off
+    MAC address 0800.2735.03c6, MTU 1500
+    IP address 169.254.1.11, subnet mask 255.255.255.0
+    0 packets input, 0 bytes, 0 no buffer
+    Received 0 broadcasts, 0 runts, 0 giants
+    0 input errors, 0 CRC, 0 frame, 0 overrun, 0 ignored, 0 abort
+    0 pause input, 0 resume input
+    0 L2 decode drops
+    1 packets output, 60 bytes, 0 underruns
+    0 pause output, 0 resume output
+    0 output errors, 0 collisions, 1 interface resets
+    0 late collisions, 0 deferred
+    0 input reset drops, 0 output reset drops
+    input queue (blocks free curr/low): hardware (511/511)
+    output queue (blocks free curr/low): hardware (511/510)
+  Traffic Statistics for "inside":
+    0 packets input, 0 bytes
+    1 packets output, 28 bytes
+    0 packets dropped
+      1 minute input rate 0 pkts/sec,  0 bytes/sec
+      1 minute output rate 0 pkts/sec,  0 bytes/sec
+      1 minute drop rate, 0 pkts/sec
+      5 minute input rate 0 pkts/sec,  0 bytes/sec
+      5 minute output rate 0 pkts/sec,  0 bytes/sec
+      5 minute drop rate, 0 pkts/sec
+Interface Management0/0 "management", is up, line protocol is up
+  Hardware is i82540EM rev02, BW 1000 Mbps, DLY 10 usec
+    Auto-Duplex(Full-duplex), Auto-Speed(1000 Mbps)
+    Input flow control is unsupported, output flow control is off
+    MAC address 0800.277d.ea42, MTU 1500
+    IP address 10.0.2.15, subnet mask 255.255.255.0
+    1086 packets input, 83965 bytes, 0 no buffer
+    Received 2 broadcasts, 0 runts, 0 giants
+    0 input errors, 0 CRC, 0 frame, 0 overrun, 0 ignored, 0 abort
+    0 pause input, 0 resume input
+    0 L2 decode drops
+    1071 packets output, 130571 bytes, 0 underruns
+    0 pause output, 0 resume output
+    0 output errors, 0 collisions, 1 interface resets
+    0 late collisions, 0 deferred
+    0 input reset drops, 0 output reset drops
+    input queue (blocks free curr/low): hardware (497/458)
+    output queue (blocks free curr/low): hardware (510/506)
+  Traffic Statistics for "management":
+        1085 packets input, 62837 bytes
+    1071 packets output, 114891 bytes
+    2 packets dropped
+      1 minute input rate 16 pkts/sec,  905 bytes/sec
+      1 minute output rate 16 pkts/sec,  1762 bytes/sec
+      1 minute drop rate, 0 pkts/sec
+      5 minute input rate 0 pkts/sec,  0 bytes/sec
+      5 minute output rate 0 pkts/sec,  0 bytes/sec
+      5 minute drop rate, 0 pkts/sec
+            

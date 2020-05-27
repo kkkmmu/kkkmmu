@@ -1,0 +1,175 @@
+# We use 
+#
+- Name: Init
+  Routines:
+   - {Device: DUT1, Type: R, Delay: 0, API: DelVlan, Params: [130]}
+   - {Device: DUT2, Type: R, Delay: 0, API: DelVlan, Params: [130]}
+   - {Device: DUT3, Type: R, Delay: 0, API: DelVlan, Params: [130]}
+   - {Device: DUT1, Type: R, Delay: 0, API: DelMlag, Params: [1, 1]}
+   - {Device: DUT2, Type: R, Delay: 0, API: DelMlag, Params: [1, 1]}
+   - {Device: DUT1, Type: R, Delay: 0, API: DelLacpInterface, Params: [1]}
+   - {Device: DUT2, Type: R, Delay: 0, API: DelLacpInterface, Params: [1]}
+   - {Device: DUT3, Type: R, Delay: 0, API: DelLacpInterface, Params: [1]}
+   - {Device: DUT1, Type: R, Delay: 0, API: DelLacpMember, Params: [D1I3, 1]}
+   - {Device: DUT2, Type: R, Delay: 0, API: DelLacpMember, Params: [D2I3, 1]}
+   - {Device: DUT3, Type: R, Delay: 0, API: DelLacpMember, Params: [D3I1, 1]}
+   - {Device: DUT3, Type: R, Delay: 0, API: DelLacpMember, Params: [D3I2, 1]}
+   - {Device: DUT1, Type: R, Delay: 0, API: DelMcecIntraDomainLink, Params: [D1I1]}
+   - {Device: DUT2, Type: R, Delay: 0, API: DelMcecIntraDomainLink, Params: [D2I1]}
+   - {Device: DUT1, Type: R, Delay: 0, API: DelMcecDomainDataLink, Params: [D1I2]}
+   - {Device: DUT2, Type: R, Delay: 0, API: DelMcecDomainDataLink, Params: [D2I2]}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsVlanExist, Params: [130], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsVlanExist, Params: [130], Expect: false}
+   - {Device: DUT3, Type: A, Delay: 0, API: IsVlanExist, Params: [130], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsMlagExist, Params: [1], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsMlagExist, Params: [1], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [1], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [1], Expect: false}
+   - {Device: DUT3, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [1], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D1I3, 1], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D2I3, 1], Expect: false}
+   - {Device: DUT3, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D3I1, 1], Expect: false}
+   - {Device: DUT3, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D3I2, 1], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceMlagIntraDomainLink, Params: [D1I1], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceMlagDomainDataLink, Params: [D1I2], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceMlagIntraDomainLink, Params: [D2I1], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceMlagDomainDataLink, Params: [D2I2], Expect: false}
+
+
+- Name: Set All Interface Up
+  Routines:
+   - {Device: DUT1, Type: R, Delay: 0, API: SetInterfaceUp, Params: [D1I1]}
+   - {Device: DUT1, Type: R, Delay: 0, API: SetInterfaceUp, Params: [D1I2]}
+   - {Device: DUT1, Type: R, Delay: 0, API: SetInterfaceUp, Params: [D1I3]}
+   - {Device: DUT2, Type: R, Delay: 0, API: SetInterfaceUp, Params: [D2I1]}
+   - {Device: DUT2, Type: R, Delay: 0, API: SetInterfaceUp, Params: [D2I2]}
+   - {Device: DUT2, Type: R, Delay: 0, API: SetInterfaceUp, Params: [D2I3]}
+   - {Device: DUT3, Type: R, Delay: 0, API: SetInterfaceUp, Params: [D3I1]}
+   - {Device: DUT3, Type: R, Delay: 0, API: SetInterfaceUp, Params: [D3I2]}
+
+- Name: Check All Interface Status
+  Routines:
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceUp, Params: [D1I1], Expect: true}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceUp, Params: [D1I2], Expect: true}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceUp, Params: [D1I3], Expect: true}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceRunning, Params: [D1I1], Expect: true}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceRunning, Params: [D1I2], Expect: true}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceRunning, Params: [D1I3], Expect: true}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceUp, Params: [D2I1], Expect: true}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceUp, Params: [D2I2], Expect: true}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceUp, Params: [D2I3], Expect: true}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceRunning, Params: [D2I1], Expect: true}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceRunning, Params: [D2I2], Expect: true}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceRunning, Params: [D2I3], Expect: true}
+   - {Device: DUT3, Type: A, Delay: 0, API: IsInterfaceUp, Params: [D3I1], Expect: true}
+   - {Device: DUT3, Type: A, Delay: 0, API: IsInterfaceUp, Params: [D3I2], Expect: true}
+   - {Device: DUT3, Type: A, Delay: 0, API: IsInterfaceRunning, Params: [D3I1], Expect: true}
+   - {Device: DUT3, Type: A, Delay: 0, API: IsInterfaceRunning, Params: [D3I2], Expect: true}
+
+- Name: Basic Vlan Configuration Set Up
+  Routines:
+   - {Device: DUT1, Type: R, Delay: 0, API: AddVlan, Params: [130]}
+   - {Device: DUT2, Type: R, Delay: 0, API: AddVlan, Params: [130]}
+   - {Device: DUT3, Type: R, Delay: 0, API: AddVlan, Params: [130]}
+   - {Device: DUT1, Type: R, Delay: 0, API: AddInterfaceToVlan, Params: [D1I3, 130, false]}
+   - {Device: DUT2, Type: R, Delay: 0, API: AddInterfaceToVlan, Params: [D2I3, 130, false]}
+   - {Device: DUT3, Type: R, Delay: 0, API: AddInterfaceToVlan, Params: [D3I1, 130, false]}
+   - {Device: DUT3, Type: R, Delay: 0, API: AddInterfaceToVlan, Params: [D3I2, 130, false]}
+
+- Name: Check Vlan configuration
+  Routines:
+   - {Device: DUT1, Type: A, Delay: 0, API: IsVlanExist, Params: [130], Expect: true}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsVlanExist, Params: [130], Expect: true}
+   - {Device: DUT3, Type: A, Delay: 0, API: IsVlanExist, Params: [130], Expect: true}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceVlanMember, Params: [D1I3, 130], Expect: true}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceVlanMember, Params: [D2I3, 130], Expect: true}
+   - {Device: DUT3, Type: A, Delay: 0, API: IsInterfaceVlanMember, Params: [D3I1, 130], Expect: true}
+   - {Device: DUT3, Type: A, Delay: 0, API: IsInterfaceVlanMember, Params: [D3I2, 130], Expect: true}
+
+- Name: Basic LACP Configuration
+  Routines:
+   - {Device: DUT1, Type: R, Delay: 0, API: AddLacpInterface, Params: [1]}
+   - {Device: DUT2, Type: R, Delay: 0, API: AddLacpInterface, Params: [1]}
+   - {Device: DUT3, Type: R, Delay: 0, API: AddLacpInterface, Params: [1]}
+   - {Device: DUT1, Type: R, Delay: 0, API: AddLacpMember, Params: [D1I3, 1]}
+   - {Device: DUT2, Type: R, Delay: 0, API: AddLacpMember, Params: [D2I3, 1]}
+   - {Device: DUT3, Type: R, Delay: 0, API: AddLacpMember, Params: [D3I1, 1]}
+   - {Device: DUT3, Type: R, Delay: 0, API: AddLacpMember, Params: [D3I2, 1]}
+
+- Name: Check Basic LACP status
+  Routines:
+   - {Device: DUT1, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [1], Expect: true}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [1], Expect: true}
+   - {Device: DUT3, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [1], Expect: true}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D1I3, 1], Expect: true}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D2I3, 1], Expect: true}
+   - {Device: DUT3, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D3I1, 1], Expect: true}
+   - {Device: DUT3, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D3I2, 1], Expect: true}
+
+- Name: Set Mcec intra domain Link
+  Routines:
+   - {Device: DUT1, Type: R, Delay: 0, API: AddMcecIntraDomainLink, Params: [D1I1]}
+   - {Device: DUT2, Type: R, Delay: 0, API: AddMcecIntraDomainLink, Params: [D2I1]}
+   - {Device: DUT1, Type: R, Delay: 0, API: AddMcecDomainDataLink, Params: [D1I2]}
+   - {Device: DUT2, Type: R, Delay: 0, API: AddMcecDomainDataLink, Params: [D2I2]}
+
+- Name: Check Mcec domain Status
+  Routines: 
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceMlagIntraDomainLink, Params: [D1I1], Expect: true}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceMlagDomainDataLink, Params: [D1I2], Expect: true}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceMlagIntraDomainLink, Params: [D2I1], Expect: true}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceMlagDomainDataLink, Params: [D2I2], Expect: true}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsMlagDomainInSync, Expect: true}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsMlagDomainInSync, Expect: true}
+
+- Name: Mlag configuration
+  Routines:
+   - {Device: DUT1, Type: R, Delay: 0, API: AddMlag, Params: [1, 1]}
+   - {Device: DUT2, Type: R, Delay: 0, API: AddMlag, Params: [1, 1]}
+
+- Name: Check Mlag interface Status
+  Routines:
+   - {Device: DUT1, Type: A, Delay: 0, API: IsLacpMemberInSync, Params: [1, D1I3], Expect: true}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsLacpMemberInSync, Params: [1, D2I3], Expect: true}
+   - {Device: DUT3, Type: A, Delay: 0, API: IsLacpMemberInSync, Params: [1, D3I1], Expect: true}
+   - {Device: DUT3, Type: A, Delay: 0, API: IsLacpMemberInSync, Params: [1, D3I2], Expect: true}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceMlagLocalMember, Params: [D1I3, 1], Expect: true}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceMlagLocalMember, Params: [D2I3, 1], Expect: true}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceMlagRemoteMember, Params: [D2I3, 1], Expect: true}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceMlagRemoteMember, Params: [D1I3, 1], Expect: true}
+
+- Name: Deinit
+  Routines:
+   - {Device: DUT1, Type: R, Delay: 0, API: DelVlan, Params: [130]}
+   - {Device: DUT2, Type: R, Delay: 0, API: DelVlan, Params: [130]}
+   - {Device: DUT3, Type: R, Delay: 0, API: DelVlan, Params: [130]}
+   - {Device: DUT1, Type: R, Delay: 0, API: DelMlag, Params: [1, 1]}
+   - {Device: DUT2, Type: R, Delay: 0, API: DelMlag, Params: [1, 1]}
+   - {Device: DUT1, Type: R, Delay: 0, API: DelLacpInterface, Params: [1]}
+   - {Device: DUT2, Type: R, Delay: 0, API: DelLacpInterface, Params: [1]}
+   - {Device: DUT3, Type: R, Delay: 0, API: DelLacpInterface, Params: [1]}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsVlanExist, Params: [130], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsVlanExist, Params: [130], Expect: false}
+   - {Device: DUT3, Type: A, Delay: 0, API: IsVlanExist, Params: [130], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsMlagExist, Params: [1], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsMlagExist, Params: [1], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [1], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [1], Expect: false}
+   - {Device: DUT3, Type: A, Delay: 0, API: IsLacpInterfaceExist, Params: [1], Expect: false}
+   - {Device: DUT1, Type: R, Delay: 0, API: DelLacpMember, Params: [D1I3, 1]}
+   - {Device: DUT2, Type: R, Delay: 0, API: DelLacpMember, Params: [D2I3, 1]}
+   - {Device: DUT3, Type: R, Delay: 0, API: DelLacpMember, Params: [D3I1, 1]}
+   - {Device: DUT3, Type: R, Delay: 0, API: DelLacpMember, Params: [D3I2, 1]}
+   - {Device: DUT1, Type: R, Delay: 0, API: DelMcecIntraDomainLink, Params: [D1I1]}
+   - {Device: DUT2, Type: R, Delay: 0, API: DelMcecIntraDomainLink, Params: [D2I1]}
+   - {Device: DUT1, Type: R, Delay: 0, API: DelMcecDomainDataLink, Params: [D1I2]}
+   - {Device: DUT2, Type: R, Delay: 0, API: DelMcecDomainDataLink, Params: [D2I2]}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D1I3, 1], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D2I3, 1], Expect: false}
+   - {Device: DUT3, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D3I1, 1], Expect: false}
+   - {Device: DUT3, Type: A, Delay: 0, API: IsInterfaceLacpMember, Params: [D3I2, 1], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceMlagIntraDomainLink, Params: [D1I1], Expect: false}
+   - {Device: DUT1, Type: A, Delay: 0, API: IsInterfaceMlagDomainDataLink, Params: [D1I2], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceMlagIntraDomainLink, Params: [D2I1], Expect: false}
+   - {Device: DUT2, Type: A, Delay: 0, API: IsInterfaceMlagDomainDataLink, Params: [D2I2], Expect: false}
+

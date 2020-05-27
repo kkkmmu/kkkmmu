@@ -1,0 +1,6 @@
+- {Module: MLAG_SINGLE_DU, Name: MCEC_PROTOCOL, EnableTester: false, Enable: true, Case: true}
+- {Module: MLAG_SINGLE_DU, Name: MAC_SYNC, EnableTester: true, Enable: true, Case: true}
+- {Module: MLAG_SINGLE_DU, Name: ARP_SYNC, EnableTester: true, Enable: false, Case: true}
+- {Module: MLAG_SINGLE_DU, Name: TRAFFIC, EnableTester: true, Enable: false, Case: true}
+- {Module: MLAG_SINGLE_DU, Name: AGEING, EnableTester: true, Enable: false, Case: true}
+- {Module: MLAG_SINGLE_DU, Name: REMOTE_MEMBER_SYNC, EnableTester: false, Enable: false, Case: true}

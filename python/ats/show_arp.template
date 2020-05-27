@@ -1,0 +1,12 @@
+Value IP ((\d{1,3}\.)(\d{1,3}\.)(\d{1,3}\.)(\d{1,3}))
+Value AGE (\d+\:\d+\:\d+|-)
+Value MAC ((\S{4}(\.))(\S{4}(\.))(\S{4}))
+Value INF (\S+)
+Value PHYSICAL_INF (\S+)
+Value STATE (\w+)
+
+Start
+ ^(\s+)?${IP}\s+${AGE}\s+${MAC}\s+${INF}\s+${PHYSICAL_INF}\s+${STATE} -> Record
+ ^(\s+)?${IP}\s+${AGE}\s+${MAC}\s+${INF}\s+${STATE} -> Record
+
+EOF

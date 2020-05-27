@@ -1,0 +1,18 @@
+DUTS:
+    DUT1: {Name: DUT1, Ifps: [{Name: D1I1}, {Name: D1I2}, {Name: D1I3}, {Name: D1I4}, {Name: D1I5}]}
+    DUT2: {Name: DUT2, Ifps: [{Name: D2I1}, {Name: D2I2}, {Name: D2I3}, {Name: D2I4}, {Name: D2I5}]}
+    DUT3: {Name: DUT3, Ifps: [{Name: D3I1}, {Name: D3I2}, {Name: D3I3}, {Name: D3I4}, {Name: D3I5}]}
+
+Tester: {Name: TESTER, Ifps: [{Name: T1I1}, {Name: T1I2}, {Name: T1I3}]}
+ 
+Links:
+    - {P1: {Name: D1I1}, P2: {Name: D2I1}}
+    - {P1: {Name: D1I2}, P2: {Name: D2I2}}
+    - {P1: {Name: D1I3}, P2: {Name: D3I1}}
+    - {P1: {Name: D1I4}, P2: {Name: D3I2}}
+    - {P1: {Name: D2I3}, P2: {Name: D3I3}}
+    - {P1: {Name: D2I4}, P2: {Name: D3I4}}
+    - {P1: {Name: D1I5}, P2: {Name: T1I1}}
+    - {P1: {Name: D2I5}, P2: {Name: T1I2}}
+    - {P1: {Name: D3I5}, P2: {Name: T1I3}}
+

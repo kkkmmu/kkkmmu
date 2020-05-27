@@ -1,0 +1,15 @@
+Value ADDRESS (\S+)
+Value AGE (\S+)
+Value MAC (\S+)
+Value SOURCE (\S+)
+Value INTF (\S+)
+Value PHYSICAL_INTF (\S+)
+Value STATE (\S+)
+
+Start
+  ^(\s+)?${ADDRESS}\s+${AGE}\s+${MAC}\s+${SOURCE}\s+${INTF}\s+${PHYSICAL_INTF}\s+${STATE} -> Record
+  ^(\s+)?${ADDRESS}\s+${AGE}\s+${MAC}\s+${SOURCE}\s+${INTF}\s+${STATE} -> Record
+
+EOF
+
+
