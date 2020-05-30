@@ -11,12 +11,12 @@ let g:cscope_silent = 1
 
 "set statusline+=%#warningmsg#
 "set statusline+=%{SyntasticStatuslineFlag()}
-"set statusline+=%*
+"set statusline+=%{FugitiveStatusline()}
 
-"let g:syntastic_always_populate_loc_list = 1
-"let g:syntastic_auto_loc_list = 1
-"let g:syntastic_check_on_open = 1
-"let g:syntastic_check_on_wq = 1
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 1
 set encoding=utf-8
 
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.o     " MacOSX/Linux
@@ -26,6 +26,7 @@ let g:ctrlp_custom_ignore = {
 			\ 'link': 'some_bad_symbolic_links',
 			\ }
 
+set nocompatible
 filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
 
@@ -37,7 +38,8 @@ Bundle 'kshenoy/vim-signature'
 "Bundle 'Yggdroot/indentLine'
 Bundle 'vim-scripts/grep.vim'
 Bundle 'vim-scripts/taglist.vim'
-"Bundle 'scrooloose/nerdtree'
+Bundle 'scrooloose/nerdtree'
+Bundle 'jistr/vim-nerdtree-tabs'
 "Bundle 'airblade/vim-gitgutter'
 Bundle 'Blackrush/vim-gocode'
 Bundle 'lamproae/vim-go'
@@ -71,7 +73,7 @@ Bundle 'davidhalter/jedi-vim'
 Bundle 'tomasr/molokai'
 Bundle 'flazz/vim-colorschemes'
 Bundle 'mhinz/vim-startify'
-Bundle 'w0rp/ale'
+"Bundle 'w0rp/ale'
 Bundle 'wellle/targets.vim'
 Bundle "rhysd/vim-clang-format"
 Bundle "mattn/emmet-vim"
@@ -82,14 +84,37 @@ Bundle 'vim-utils/vim-man'
 Bundle 'SirVer/ultisnips'
 Bundle 'honza/vim-snippets'
 Bundle 'tell-k/vim-autopep8'
-Bundle 'vim-scripts/indentpython.vim'
 Bundle 'nvie/vim-flake8'
 Bundle 'vim-syntastic/syntastic'
+Bundle 'tmhedberg/SimpylFold'
+Bundle 'vim-scripts/indentpython.vim'
+Bundle 'jnurmine/Zenburn'
+Bundle 'altercation/vim-colors-solarized'
+Bundle 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
 call vundle#end()
 
+"split navigations
+set splitbelow
+set splitright
+
+nnoremap <C-j> <C-W><C-J>
+nnoremap <C-k> <C-W><C-K>
+nnoremap <C-l> <C-W><C-L>
+nnoremap <C-h> <C-W><C-H>
+
+"leader
 map <leader>k <Plug>(Man)
 map <leader>v <Plug>(Vman)
-let &runtimepath.=',~/.vim/bundle/ale'
+"let &runtimepath.=',~/.vim/bundle/ale'
+
+"folding
+set foldmethod=indent
+"set foldlevel=99
+"Enable folding with the spacebar
+nnoremap <space> za
+
+let g:SimpylFold_docstring_preview=1
+
 filetype plugin indent on
 
 " s: Find this C symbol
@@ -110,7 +135,7 @@ nnoremap  <leader>ff :call CscopeFind('f', expand('<cword>'))<CR>
 nnoremap  <leader>fi :call CscopeFind('i', expand('<cword>'))<CR
 
 nnoremap <leader>fa :call CscopeFindInteractive(expand('<cword>'))<CR>
-nnoremap <leader>l :call ToggleLocationList()<CR>
+"nnoremap <leader>l :call ToggleLocationList()<CR>
 
 nnoremap <leader>tt :TlistOpen<CR>
 nnoremap <leader>nt :NERDTree<CR>
@@ -125,7 +150,7 @@ nnoremap <leader>rg :Rgrep<CR>
 nnoremap <leader>q :q<CR>
 nnoremap <leader>w :w<CR>
 nnoremap <leader>wq :wq<CR>
-nnoremap <leader>g :<C-]><CR>
+"nnoremap <leader>g :<C-]><CR>
 nnoremap <leader>vs :VimShell<CR>
 nnoremap <leader>vc :VimShellClose<CR>
 nnoremap <leader>vp :VimShellPop<CR>
@@ -142,7 +167,6 @@ set shiftwidth=4
 "set statusline=%F\ %m%h%r%<%=\ [%{&ff},%{$fenc}]\ [%Y]\ [%l,%v]\ [%L]\ [%p%%]
 "set statusline=%F\ [%{&ff},%{$fenc}]\ [%Y]\ [%l,%v]\ [%L]\ [%p%%]
 set ruler
-syntax on
 set hlsearch
 set cindent
 set nu
@@ -242,9 +266,9 @@ let g:tmuxline_theme = {
 			\   'bg'   : [ 244, 236 ],
 			\ }
 
-let g:ale_sign_column_always = 1
-highlight clear ALEErrorSign
-highlight clear ALEWarningSign
+"let g:ale_sign_column_always = 1
+"highlight clear ALEErrorSign
+"highlight clear ALEWarningSign
 "colorscheme koehler
 "colorscheme evening
 "colorscheme morning
@@ -268,7 +292,7 @@ autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-autocmd vimenter * Tmuxline
+"autocmd vimenter * Tmuxline
 
 set updatetime=250
 set hidden
@@ -322,14 +346,14 @@ let g:clang_format#style_options = {
             \ "Standard" : "C++11",
             \ "BreakBeforeBraces" : "Stroustrup"}
 
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
+"let g:syntastic_always_populate_loc_list = 1
+"{let g:syntastic_auto_loc_list = 1
+"let g:syntastic_check_on_open = 1
+"let g:syntastic_check_on_wq = 0
 
 let g:rustfmt_autosave = 1
 
-au BufRead,BufNewFile *.py set expandtab
+"au BufRead,BufNewFile *.py set expandtab
 set autoindent
 set smartindent
 set smarttab
@@ -337,3 +361,57 @@ let g:autopep8_on_save = 1
 filetype indent on
  let g:autopep8_disable_show_diff=1
 autocmd FileType c,cpp ClangFormatAutoEnable
+
+
+"Source Code Browser
+let NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
+
+"For python dev
+au BufNewFile,BufRead *.py
+    \ set tabstop=4
+    \ set softtabstop=4
+    \ set shiftwidth=4
+    \ set textwidth=79
+    \ set expandtab
+    \ set autoindent
+    \ set fileformat=unix
+
+"For web dev
+au BufNewFile,BufRead *.js, *.html, *.css
+    \ set tabstop=2
+    \ set softtabstop=2
+    \ set shiftwidth=2
+
+let python_highlight_all=1
+
+syntax on
+
+"Mark extra withespace as bad and probably color it red.
+au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
+highlight BadWhitespace ctermbg=red guibg=darkred
+
+"YouCompleteMe
+let g:ycm_autoclose_preview_window_after_completion=1
+map <leader>f  :YcmCompleter GoToDefinitionElseDeclaration<CR>
+
+"For git
+nnoremap <leader>gs :Git<CR>
+nnoremap <leader>gl :Git log<CR>
+nnoremap <leader>gd :Git diff<CR>
+nnoremap <leader>gb :Git blame<CR>
+
+if has('gui_running')
+	set background=light
+    "colorscheme solarized
+else
+	set background=dark
+    "colorscheme solarized
+	"colorscheme zenburn
+endif
+
+"Access system clipobard in vim
+"set clipboard=unnamed
+set clipboard=unnamedplus
+
+let g:solarized_termcolors=256
+call togglebg#map("<F5>")

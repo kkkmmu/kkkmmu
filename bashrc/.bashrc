@@ -30,9 +30,9 @@ echo "Hardware Information:"
 free -m
 eval $(dircolors -b $HOME/.dircolors)
 
-bindkey '^[[A' fzf-history-widget
-bindkey '^P' up-line-or-history
-bindkey '^N' down-line-or-history
+#bindkey '^[[A' fzf-history-widget
+#bindkey '^P' up-line-or-history
+#bindkey '^N' down-line-or-history
 
 fbr() {
     local branches branch
@@ -111,4 +111,5 @@ cdf() {
     file=$(fzf +m -q "$1") && dir=$(dirname "$file") && cd "$dir"
 }
 
+export PATH=$PATH:$GOPATH:bin:/usr/local/go/bin
 set -o emacs
