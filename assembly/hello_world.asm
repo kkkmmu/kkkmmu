@@ -1,6 +1,6 @@
 global _start;
 
-section .text:
+section .text
 
 _start:
 	mov eax, 0x4               ;system call number should be passed with eax
@@ -14,8 +14,8 @@ _start:
 	int 0x80                   ;do system call
 
 section .data:
-	message: db "Hello World!", 0xA
-	message_length: equ $-message
+	message db "Hello World!", 0xA
+	message_length equ $-message
 
 
 ;nasm -f elf64 -o hello_world.o hello_world.asm
