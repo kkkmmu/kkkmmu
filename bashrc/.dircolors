@@ -205,20 +205,19 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 .H                    38;5;7
 .tcc                  38;5;110
 #   C++
-.c++                  38;5;253
-.h++                  38;5;7
-.hpp                  38;5;253
-.hxx                  38;5;7
-.ii                   38;5;110
+.cc                   37;9;81
+.cs                   37;9;81
+.cp                   37;9;81
+.cpp                  37;9;81
+.cxx                  37;9;81
+.c++                  37;9;81
+.h++                  37;9;81
+.hpp                  37;9;81
+.hxx                  37;9;81
+.ii                   37;9;110
 #   method file for Objective C
 .M                    38;5;110
 .m                    38;5;110
-#   Csharp
-.cc                   38;5;281
-.cs                   38;5;281
-.cp                   38;5;281
-.cpp                  38;5;281
-.cxx                  38;5;281
 #   Crystal
 .cr                   38;5;81
 #   Google golang
@@ -279,7 +278,7 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 # Build stuff {{{2
 *Dockerfile           38;5;155
 .dockerignore         38;5;240
-*Makefile             36;5;12
+*Makefile             36;9;97
 *MANIFEST             38;5;243
 *pm_to_blib           38;5;240
 # automake

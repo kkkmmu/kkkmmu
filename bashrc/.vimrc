@@ -1,274 +1,273 @@
-let g:go_highlight_functions = 1 
-let g:go_highlight_methods = 1 
-let g:go_highlight_structs = 1 
-let g:go_highlight_interfaces = 1
-let g:go_highlight_operators = 1 
-let g:go_highlight_build_constraints = 1
+"Install vim-plug
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
 
-let g:spf13_keep_trailing_whitespace = 1 
-let g:cscope_silent = 1
-"gogogo$$"
+"vim plugin packages
+"wget https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+"PlugInstall: Install plugins
+"PlugUpdate:  Install or update plugins
+"PlugClean:   Remove unlisted plugins
+"PlugUpgrade: Ugrade vim-plug itself
+"PlugStatus:  Check the status of plugins
+"rtp:         Subdirectory that contains VIM plugin
+"dir:         Custom directory for the plugin
+"as:          Use different name for the plugin
+"do:          Post-update hook
+"on:          On-demand loading: Comannds for <Plug>-mappings
+"for:         On-demand mapping: File types
+"frozen:      Do not update unless explictly specified
+call plug#begin('~/.vim/plugged')
+Plug 'tpope/vim-sensible'
+Plug 'junegunn/seoul256.vim'
+Plug 'Shougo/vimproc.vim', { 'do': 'make' }
+Plug 'scrooloose/nerdtree', { 'on' : 'NERDTreeToggle' }
+Plug 'junegunn/goyo.vim', { 'for' : 'markdown' }
+Plug 'junegunn/limelight.vim'
+Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
+Plug 'ycm-core/YouCompleteMe', { 'do': './install.py --all' }
+Plug 'nsf/gocode', { 'tag': '*', 'rtp': 'vim' }
+Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
+Plug 'tpope/vim-fugitive'
+Plug 'vim-scripts/grep.vim'
+Plug 'tell-k/vim-autopep8', {'for' : 'py'}
+Plug 'nvie/vim-flake8'
+Plug 'honza/vim-snippets'
+Plug 'vim-scripts/indentpython.vim',  {'for' : 'py'}
+Plug 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
+Plug 'nathanalderson/yang.vim', { 'for' : 'yang' }
+Plug 'vim-utils/vim-man'
+Plug 'nrc/rustfmt', {'for' : 'rs'}
+Plug 'rust-lang/rust.vim', {'for' : 'rs'}
+Plug 'pangloss/vim-javascript', {'for' : 'js'}
+"Plug 'w0rp/ale'
+Plug 'flazz/vim-colorschemes'
+Plug 'ludovicchabant/vim-gutentags'
+Plug 'skywind3000/gutentags_plus'
+Plug 'neomake/neomake'
+"Plug 'kien/ctrlp.vim'
+Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
+Plug 'Shougo/vimshell.vim'
+Plug 'Shougo/vimproc.vim'
+Plug 'vim-syntastic/syntastic'
+if has('nvim')
+	Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+else
+	Plug 'Shougo/deoplete.nvim'
+	Plug 'roxma/nvim-yarp'
+	Plug 'roxma/vim-hug-neovim-rpc'
+endif
+let g:deoplete#enable_at_startup = 1
+call plug#end() 
 
-"set statusline+=%#warningmsg#
-"set statusline+=%{SyntasticStatuslineFlag()}
-"set statusline+=%{FugitiveStatusline()}
-
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 1
-set encoding=utf-8
-
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.o     " MacOSX/Linux
-let g:ctrlp_custom_ignore = {
-			\ 'dir':  '\v[\/]\.(git|hg|svn)$',
-			\ 'file': '\v\.(exe|so|dll)$',
-			\ 'link': 'some_bad_symbolic_links',
-			\ }
-
-set nocompatible
-filetype off
-set rtp+=~/.vim/bundle/Vundle.vim
-
-let mapleader="."
-
-call vundle#begin()
-Bundle 'brookhong/cscope.vim'
-Bundle 'kshenoy/vim-signature'
-"Bundle 'Yggdroot/indentLine'
-Bundle 'vim-scripts/grep.vim'
-Bundle 'vim-scripts/taglist.vim'
-Bundle 'scrooloose/nerdtree'
-Bundle 'jistr/vim-nerdtree-tabs'
-"Bundle 'airblade/vim-gitgutter'
-Bundle 'Blackrush/vim-gocode'
-Bundle 'lamproae/vim-go'
-"Bundle 'tpope/vim-markdown'
-"Bundle 'vim-airline/vim-airline'
-"Bundle 'vim-airline/vim-airline-themes'
-"Bundle 'Valloric/YouCompleteMe'
-Bundle 'NLKNguyen/papercolor-theme'
-Bundle 'vim-scripts/mru.vim'
-Bundle 'vim-scripts/desert256.vim'
-Bundle 'majutsushi/tagbar'
-Bundle 'edkolev/tmuxline.vim'
-Bundle 'edkolev/promptline.vim'
-"Bundle 'vim-ctrlspace/vim-ctrlspace'
-Bundle 'kien/ctrlp.vim'
-"Bundle 'Shougo/unite.vim'
-"Bundle 'Shougo/vimshell.vim'
-"Bundle 'Shougo/vimproc'
-Bundle 'rdnetto/YCM-Generator'
-Bundle 'tpope/vim-surround'
-Bundle 'nrc/rustfmt'
-Bundle 'rust-lang/rust.vim'
-Bundle 'mattn/webapi-vim'
-Bundle 'udalov/kotlin-vim'
-Bundle 'dart-lang/dart-vim-plugin'
-Bundle 'vim-scripts/DrawIt'
-Bundle 'scrooloose/nerdcommenter'
-Bundle 'tpope/vim-fugitive'
-Bundle 'easymotion/vim-easymotion'
-Bundle 'davidhalter/jedi-vim'
-Bundle 'tomasr/molokai'
-Bundle 'flazz/vim-colorschemes'
-Bundle 'mhinz/vim-startify'
-"Bundle 'w0rp/ale'
-Bundle 'wellle/targets.vim'
-Bundle "rhysd/vim-clang-format"
-Bundle "mattn/emmet-vim"
-Bundle "pangloss/vim-javascript"
-Bundle 'posva/vim-vue'
-Bundle 'nathanalderson/yang.vim'
-Bundle 'vim-utils/vim-man'
-Bundle 'SirVer/ultisnips'
-Bundle 'honza/vim-snippets'
-Bundle 'tell-k/vim-autopep8'
-Bundle 'nvie/vim-flake8'
-Bundle 'vim-syntastic/syntastic'
-Bundle 'tmhedberg/SimpylFold'
-Bundle 'vim-scripts/indentpython.vim'
-Bundle 'jnurmine/Zenburn'
-Bundle 'altercation/vim-colors-solarized'
-Bundle 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
-call vundle#end()
-
-"split navigations
-set splitbelow
-set splitright
-
-nnoremap <C-j> <C-W><C-J>
-nnoremap <C-k> <C-W><C-K>
-nnoremap <C-l> <C-W><C-L>
-nnoremap <C-h> <C-W><C-H>
-
-"leader
-map <leader>k <Plug>(Man)
-map <leader>v <Plug>(Vman)
-"let &runtimepath.=',~/.vim/bundle/ale'
-
-"folding
-set foldmethod=indent
-"set foldlevel=99
-"Enable folding with the spacebar
-nnoremap <space> za
-
-let g:SimpylFold_docstring_preview=1
-
-filetype plugin indent on
-
-" s: Find this C symbol
-nnoremap  <leader>fs :call CscopeFind('s', expand('<cword>'))<CR>
-" g: Find this definition
-nnoremap  <leader>fg :call CscopeFind('g', expand('<cword>'))<CR>
-" " d: Find functions called by this function
-nnoremap  <leader>fd :call CscopeFind('d', expand('<cword>'))<CR>
-" " c: Find functions calling this function
-nnoremap  <leader>fc :call CscopeFind('c', expand('<cword>'))<CR>
-" " t: Find this text string
-nnoremap  <leader>ft :call CscopeFind('t', expand('<cword>'))<CR>
-" " e: Find this egrep pattern
-nnoremap  <leader>fe :call CscopeFind('e', expand('<cword>'))<CR>
-" " f: Find this file
-nnoremap  <leader>ff :call CscopeFind('f', expand('<cword>'))<CR>
-" " i: Find files #including this file
-nnoremap  <leader>fi :call CscopeFind('i', expand('<cword>'))<CR
-
-nnoremap <leader>fa :call CscopeFindInteractive(expand('<cword>'))<CR>
-"nnoremap <leader>l :call ToggleLocationList()<CR>
-
-nnoremap <leader>tt :TlistOpen<CR>
-nnoremap <leader>nt :NERDTree<CR>
-nnoremap <leader>m :MRU<CR>
-
-nmap <leader>tb :TagbarToggle<CR>
-nmap <C-n> :cnext<CR>
-nmap <C-p> :cprev<CR>
-map <C-q> :NERDTreeToggle<CR>
-
-nnoremap <leader>rg :Rgrep<CR>
-nnoremap <leader>q :q<CR>
-nnoremap <leader>w :w<CR>
-nnoremap <leader>wq :wq<CR>
-"nnoremap <leader>g :<C-]><CR>
-nnoremap <leader>vs :VimShell<CR>
-nnoremap <leader>vc :VimShellClose<CR>
-nnoremap <leader>vp :VimShellPop<CR>
-nnoremap <leader>d :GoDoc<CR>
-
-inoremap jk <esc>
-
-"set lines=60
+set nu
+set hlsearch
+set incsearch  "start search before pressing entry
+"set listchars  "Makes set list prettier
+"set scrolloff  "Aways show at least one line above/below the cursor
+set autoread
+set ruler
+set cindent
+set laststatus=2
 set nolist
 set noexpandtab
 set tabstop=4
 set linespace=4
 set shiftwidth=4
-"set statusline=%F\ %m%h%r%<%=\ [%{&ff},%{$fenc}]\ [%Y]\ [%l,%v]\ [%L]\ [%p%%]
-"set statusline=%F\ [%{&ff},%{$fenc}]\ [%Y]\ [%l,%v]\ [%L]\ [%p%%]
-set ruler
-set hlsearch
-set cindent
-set nu
-set laststatus=2
-"set background=dark
+set updatetime=250
+set hidden
+set t_Co=256
+set autoindent
+set smartindent
+set smarttab
+set foldmethod=manual
+set encoding=utf-8
 
-nnoremap <Leader>b :bp<CR>
-nnoremap <Leader>f :bn<CR>
+filetype plugin indent on
+syntax on
 
-nnoremap <Leader>l :ls<CR>
-nnoremap <Leader>1 :1b<CR>
-nnoremap <Leader>2 :2b<CR>
-nnoremap <Leader>3 :3b<CR>
-nnoremap <Leader>4 :4b<CR>
-nnoremap <Leader>5 :5b<CR>
-nnoremap <Leader>6 :6b<CR>
-nnoremap <Leader>7 :7b<CR>
-nnoremap <Leader>8 :8b<CR>
-nnoremap <Leader>9 :9b<CR>
-nnoremap <Leader>0 :10b<CR>
+let mapleader="."
 
-nnoremap <Leader>o :copen<CR>
-nnoremap <Leader>c :cclose<CR>
-nnoremap <Leader>w :cw<CR>
+map <leader>k <Plug>(Man)
+map <leader>v <Plug>(Vman)
+map <C-q> :NERDTreeToggle<CR>
 
-hi link CtrlSpaceNormal   PMenu
-hi link CtrlSpaceSelected PMenuSel
-hi link CtrlSpaceSearch   Search
-hi link CtrlSpaceStatus   StatusLine
+nnoremap <leader>vs :VimShell<CR>
+nnoremap <leader>vc :VimShellClose<CR>
+nnoremap <leader>vp :VimShellPop<CR>
+nnoremap <leader>d :GoDoc<CR>
+
+"nnoremap <space> za
+"
+"egrep key mapping currently not used
+"nnoremap <leader>rg :Rgrep<CR>
+
+"LeaderF rg need install ripgrep
+nnoremap <leader>rc :Leaderf --recall<CR>
+nnoremap <leader>rg :<C-U><C-R>=printf("Leaderf! --stayOpen rg -e %s", expand("<cword>"))<CR>
+
+"For git
+nnoremap <leader>gs :Git<CR>
+nnoremap <leader>gl :Git log<CR>
+nnoremap <leader>gd :Git diff<CR>
+nnoremap <leader>gb :Git blame<CR>
 
 let Grep_Default_Filelist='*.[cshS] *.go *.py *.cpp *.hpp *.cc *.js'
 let Grep_Skip_Files = '*.bak *~ *.so *.i *.a *.o'
 let Grep_Default_Options='-i --color=auto'
 let Grep_Skip_Dirs='.svn .git'
 
-let g:indentLine_char='|'
-let g:indentLine_color_term=239
-let g:indentLine_color_gui="#A4E57E"
-let g:indentLine_color_dark=1
-let g:indentLine_enabled=1
-let Tlist_Use_Right_Window=1
-let g:airline_symbols = {}
-"let g:airline_theme="badcat"
-let g:airline_theme="luna"
-let g:airline_left_sep = '▶'
-let g:airline_left_alt_sep = '❯'
-let g:airline_right_sep = '◀'
-let g:airline_right_alt_sep = '❮'
-let g:airline_symbols.linenr = '¶'
-let g:airline_symbols.branch = '⎇'
-let g:airline_symbols.linenr = '␊'
-let g:airline_symbols.linenr = '␤'
-let g:airline_symbols.linenr = '¶'
-let g:airline_symbols.branch = '⎇'
-let g:airline_symbols.paste = 'ρ'
-let g:airline_symbols.paste = 'Þ'
-let g:airline_symbols.paste = '∥'
-let g:airline_symbols.whitespace = 'Ξ'
-let g:airline_symbols.readonly = '⎇'
-let g:airline_symbols.space = ' '
+"let g:Lf_WindowPosition = 'popup'
+let g:Lf_PreviewInPopup = 1
+let g:Lf_ShortcutF = '<C-P>'
+let g:Lf_ReverseOrder = 1
+let g:Lf_AutoResize = 1
+"let g:Lf_WorkingDirectoryMode = 'Ac'
+"let g:Lf_RootMarkers = ['.git', '.svn']
+"let g:Lf_WorkingDirectory = finddir('.git', '.svn', '.;')
+let g:Lf_PreviewCode = 1
 
-let g:airline#extensions#tabline#left_sep = ' '
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#buffer_nr_show = 1
-let g:airline#extensions#tabline#left_alt_sep = '|'
-let g:airline#extensions#whitespace#enabled = 0
-let g:airline#extensions#whitespace#symbol = '!'
-let MRU_Max_Menu_Entries = 20
-let g:airline#extensions#tmuxline#enabled = 0
-let g:tmuxline_powerline_separators = 0
+"pip install pygments is necessary
+"let g:Lf_Gtagslabel = 'native-pygments'
+let g:Lf_CommandMap = {'<C-K>': ['<Up>'], '<C-J>': ['<Down>']}
+let g:Lf_UseVersionControlTool = 0
+"let g:Lf_RgConfig = [
+"        \ "--max-columns=150",
+"        \ "--type-add web:*.{html,css,js}*",
+"        \ "--glob=!git/*",
+"        \ "--hidden"
+"    \ ]
 
-let g:tmuxline_preset = {
-			\'a'    : '#S',
-			\'c'    : ['#(whoami)', '#(uptime | cud -d " " -f 1,2,3)'],
-			\'win'  : ['#I', '#W'],
-			\'cwin' : ['#I', '#W', '#F'],
-			\'x'    : '#(date)',
-			\'y'    : ['%R', '%a', '%Y'],
-			\'z'    : '#H'}
+let g:autopep8_on_save = 1
+filetype indent on
+ let g:autopep8_disable_show_diff=1
 
-let g:tmuxline_separators = {
-			\ 'left' : '▶',
-			\ 'left_alt': '▶',
-			\ 'right' : '◀',
-			\ 'right_alt' : '◀',
-			\ 'space' : ' '}
+"gutentags configuration
+let g:gutentags_project_root = ['package.json', '.git', '.svn']
+let g:gutentags_add_default_project_roots = 0
+let g:gutentags_cache_dir = expand('~/.cache/vim/ctags/')
+let g:gutentags_generate_on_write = 1
+let g:gutentags_generate_on_new = 1
+let g:gutentags_generate_on_missing = 1
+let g:gutentags_generate_on_write = 1
+let g:gutentags_generate_on_empty_buffer = 0
+let g:gutentags_ctags_extra_args = [
+      \ '--tag-relative=yes',
+      \ '--fields=+ailmnS',
+      \ ]
+ 
+"gutentags ignored file
+let g:gutentags_ctags_exclude = [
+      \ '*.git', '*.svg', '*.hg',
+      \ '*/tests/*',
+      \ 'build',
+      \ 'dist',
+      \ '*sites/*/files/*',
+      \ 'bin',
+      \ 'node_modules',
+      \ 'bower_components',
+      \ 'cache',
+      \ 'compiled',
+      \ 'docs',
+      \ 'example',
+      \ 'bundle',
+      \ 'vendor',
+      \ '*.md',
+      \ '*-lock.json',
+      \ '*.lock',
+      \ '*bundle*.js',
+      \ '*build*.js',
+      \ '.*rc*',
+      \ '*.json',
+      \ '*.min.*',
+      \ '*.map',
+      \ '*.bak',
+      \ '*.zip',
+      \ '*.pyc',
+      \ '*.class',
+      \ '*.sln',
+      \ '*.Master',
+      \ '*.csproj',
+      \ '*.tmp',
+      \ '*.csproj.user',
+      \ '*.cache',
+      \ '*.pdb',
+      \ 'tags*',
+      \ 'cscope.*',
+      \ '*.css',
+      \ '*.less',
+      \ '*.scss',
+      \ '*.exe', '*.dll',
+      \ '*.mp3', '*.ogg', '*.flac',
+      \ '*.swp', '*.swo',
+      \ '*.bmp', '*.gif', '*.ico', '*.jpg', '*.png',
+      \ '*.rar', '*.zip', '*.tar', '*.tar.gz', '*.tar.xz', '*.tar.bz2',
+      \ '*.pdf', '*.doc', '*.docx', '*.ppt', '*.pptx',
+      \ ]
 
-let g:tmuxline_theme = {
-			\   'a'    : [ 236, 103 ],
-			\   'b'    : [ 253, 239 ],
-			\   'c'    : [ 244, 236 ],
-			\   'x'    : [ 244, 236 ],
-			\   'y'    : [ 253, 239 ],
-			\   'z'    : [ 236, 103 ],
-			\   'win'  : [ 103, 236 ],
-			\   'cwin' : [ 236, 103 ],
-			\   'bg'   : [ 244, 236 ],
-			\ }
+map <leader>f  :YcmCompleter GoToDefinitionElseDeclaration<CR>
+let g:ycm_autoclose_preview_window_after_completion=1
 
-"let g:ale_sign_column_always = 1
-"highlight clear ALEErrorSign
-"highlight clear ALEWarningSign
+" Set this variable to 1 to fix files when you save them.
+"let g:ale_fix_on_save = 1
+"let g:ale_completion_enabled = 1
+"let g:ale_completion_tsserver_autoimport = 1
+"let g:ale_set_balloons = 1
+"let g:ale_hover_to_preview = 1
+
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
+" enable gtags module
+let g:gutentags_modules = ['ctags', 'gtags_cscope']
+
+" config project root markers.
+let g:gutentags_project_root = ['.git', '.root', '.svn']
+
+" generate datebases in my cache directory, prevent gtags files polluting my project
+let g:gutentags_cache_dir = expand('~/.cache/tags')
+"
+" change focus to quickfix window after search (optional).
+let g:gutentags_plus_switch = 1
+
+"let g:gutentags_define_advanced_commands = 1
+"noremap <silent> <leader>u :GutentagsUpdate<C-R>
+
+".noremap <silent> <leader>gs :GscopeFind s <C-R><C-W><cr>
+".noremap <silent> <leader>gg :GscopeFind g <C-R><C-W><cr>
+".noremap <silent> <leader>gc :GscopeFind c <C-R><C-W><cr>
+".noremap <silent> <leader>gt :GscopeFind t <C-R><C-W><cr>
+".noremap <silent> <leader>ge :GscopeFind e <C-R><C-W><cr>
+".noremap <silent> <leader>gf :GscopeFind f <C-R>=expand("<cfile>")<cr><cr>
+".noremap <silent> <leader>gi :GscopeFind i <C-R>=expand("<cfile>")<cr><cr>
+".noremap <silent> <leader>gd :GscopeFind d <C-R><C-W><cr>
+".noremap <silent> <leader>ga :GscopeFind a <C-R><C-W><cr>
+".noremap <silent> <leader>gz :GscopeFind z <C-R><C-W><cr>
+
+syntax on
+
+if has('gui_running')
+	set background=light
+    "colorscheme solarized
+else
+	set background=dark
+    "colorscheme solarized
+	"colorscheme zenburn
+endif
+
+"Mark extra withespace as bad and probably color it red.
+au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
+highlight BadWhitespace ctermbg=red guibg=darkred
+
+colorscheme molokai
 "colorscheme koehler
 "colorscheme evening
 "colorscheme morning
@@ -280,30 +279,13 @@ let g:tmuxline_theme = {
 "colorscheme hybrid
 "colorscheme jellybeans
 "colorscheme PaperColor
-colorscheme desert
+"colorscheme desert
 "colorscheme desert256
 "colorscheme airline
-colorscheme molokai
 
-"autocmd vimenter * NERDTree
+"autocmd fileType c,cpp ClangFormatAutoEnable
 "autocmd vimenter *  TlistOpen
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-"autocmd vimenter * Tmuxline
 
-set updatetime=250
-set hidden
-set t_Co=256
-"let g:CtrlSpaceSearchTiming = 500
-
-"mdir ~/.vim/bundle
-"git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-"BundleInstall
-"BundleUpdate
-"Useful command:
 "dw, -----> delete word
 "yt, -----> copy until ',' ---- we can do yt anything.
 "yw, -----> copy word.
@@ -327,91 +309,4 @@ set t_Co=256
 "dap -----> Delete all current paragraph
 "<leader>di ----------> start DrawIt
 "<leader>ds ----------> stop DrawIt
-onoremap in( :<c-u>normal! f(vi(<cr>
-onoremap il( :<c-u>normal! F)vi(<cr>
-onoremap af :<C-u>normal! ggVG<CR>
-vmap v <Plug>(expand_region_expand)
-vmap <C-v> <Plug>(expand_region_shrink)
-nnoremap <expr> n  'Nn'[v:searchforward]
-nnoremap <expr> N  'nN'[v:searchforward]
 
-"au BufWrite * :Autoformat
-"au BufWrite * :RemoveTrailingSpaces
-"au BufWrite * :ClangFormat
-
-let g:clang_format#style_options = {
-            \ "AccessModifierOffset" : -4,
-            \ "AllowShortIfStatementsOnASingleLine" : "true",
-            \ "AlwaysBreakTemplateDeclarations" : "true",
-            \ "Standard" : "C++11",
-            \ "BreakBeforeBraces" : "Stroustrup"}
-
-"let g:syntastic_always_populate_loc_list = 1
-"{let g:syntastic_auto_loc_list = 1
-"let g:syntastic_check_on_open = 1
-"let g:syntastic_check_on_wq = 0
-
-let g:rustfmt_autosave = 1
-
-"au BufRead,BufNewFile *.py set expandtab
-set autoindent
-set smartindent
-set smarttab
-let g:autopep8_on_save = 1
-filetype indent on
- let g:autopep8_disable_show_diff=1
-autocmd FileType c,cpp ClangFormatAutoEnable
-
-
-"Source Code Browser
-let NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
-
-"For python dev
-au BufNewFile,BufRead *.py
-    \ set tabstop=4
-    \ set softtabstop=4
-    \ set shiftwidth=4
-    \ set textwidth=79
-    \ set expandtab
-    \ set autoindent
-    \ set fileformat=unix
-
-"For web dev
-au BufNewFile,BufRead *.js, *.html, *.css
-    \ set tabstop=2
-    \ set softtabstop=2
-    \ set shiftwidth=2
-
-let python_highlight_all=1
-
-syntax on
-
-"Mark extra withespace as bad and probably color it red.
-au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
-highlight BadWhitespace ctermbg=red guibg=darkred
-
-"YouCompleteMe
-let g:ycm_autoclose_preview_window_after_completion=1
-map <leader>f  :YcmCompleter GoToDefinitionElseDeclaration<CR>
-
-"For git
-nnoremap <leader>gs :Git<CR>
-nnoremap <leader>gl :Git log<CR>
-nnoremap <leader>gd :Git diff<CR>
-nnoremap <leader>gb :Git blame<CR>
-
-if has('gui_running')
-	set background=light
-    "colorscheme solarized
-else
-	set background=dark
-    "colorscheme solarized
-	"colorscheme zenburn
-endif
-
-"Access system clipobard in vim
-"set clipboard=unnamed
-set clipboard=unnamedplus
-
-let g:solarized_termcolors=256
-call togglebg#map("<F5>")

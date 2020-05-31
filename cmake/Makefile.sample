@@ -1,0 +1,10 @@
+all: awsome_program
+
+awsome_program:useful_functions
+	g++ -o awsome_program useful_functions.o utilies.o stuf_that_should_be_in_opencv.o main.o 
+
+useful_functions:
+	g++ -c useful_functions.cpp utilies.cpp stuf_that_should_be_in_opencv.cpp main.cpp -L/usr/lib/opencv_core
+
+clean:
+	rm *.o awsome_program
