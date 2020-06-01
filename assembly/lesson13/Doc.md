@@ -1,0 +1,2 @@
+lculator - subtraction
+In this program we will be subtracting the value in the register EBX from the value in the register EAX. Firstly we load EAX and EBX with integers in the same way as Lesson 12. The only difference is we will be using the SUB instruction to perform our subtraction logic, leaving our answer in the left most register of this instruction (in our case EAX). Then all we need to do is call our integer printing function to complete the program.

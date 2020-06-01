@@ -1,0 +1,2 @@
+Calculator - addition
+In this program we will be adding the registers EAX and EBX together and we'll leave our answer in EAX. Firstly we use the MOV instruction to load EAX with an integer (in this case 90). We then MOV an integer into EBX (in this case 9). Now all we need to do is use the ADD instruction to perform our addition. EBX & EAX will be added together leaving our answer in the left most register in this instruction (in our case EAX). Then all we need to do is call our integer printing function to complete the program.
