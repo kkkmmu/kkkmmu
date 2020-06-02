@@ -12,10 +12,10 @@ LDFLAGS :=
 all: $(EXE)
 
 $(EXE):$(OBJ)
-	$(LD) -m elf_x86_64 -o $@ $@.o
+	$(LD) -m elf_i386 -o $@ $@.o
 
 $(DIR)/%.o: $(DIR)/%.asm
-	nasm -f elf64 -o $@ $^ 
+	nasm -f elf -o $@ $^ 
 
 clean:
 	rm -rf $(EXE) $(OBJ)
