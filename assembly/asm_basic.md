@@ -9,3 +9,5 @@
 4. http://dbp-consulting.com/
 
 5. https://manybutfinite.com/post/journey-to-the-stack/
+
+6.https://en.wikibooks.org/wiki/X86_Disassembly/Functions_and_Stack_Frames
