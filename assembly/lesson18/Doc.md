@@ -1,0 +1,6 @@
+Fizz Buzz
+Firstly, some background
+FizzBuzz is group word game played in schools to teach children division. Players take turns to count aloud integers from 1 to 100 replacing any number divisible by 3 with the word "fizz" and any number divisible by 5 with the word "buzz". Numbers that are both divisible by 3 and 5 are replaced by the word "fizzbuzz". This children's game has also become a defacto interview screening question for computer programming jobs as it's thought to easily discover candidates that can't construct a simple logic gate.
+
+Writing our program
+There are a number of code solutions to this simple game and some languages offer very trivial and elegant solutions. Depending on how you choose to solve it, the solution almost always involves an if statement and possibly an else statement depending whether you choose to exploit the mathematical property that anything divisible by 5 & 3 would also be divisible by 3 * 5. Being that this is an assembly language tutorial we will provide a solution that involves a structure of two cascading if statements to print the words "fizz" and/or "buzz" and an else statement in case these fail, to print the integer as an ascii value. Each iteration of our loop will then print a line feed. Once we reach 100 we call our program exit function.
