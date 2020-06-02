@@ -1,0 +1,12 @@
+__libc_start_main
+
+Name
+	__libc_start_main -- initialization routine
+
+Synopsis
+	int __libc_start_main(int *(main) (int, char * *, char * *), int argc, char * * ubp_av, void (*init) (void), void (*fini) (void), void (*rtld_fini) (void), void (* stack_end));
+
+Description
+	The __libc_start_main() function shall initialize the process, call the main function with appropriate arguments, and handle the return from main().
+
+__libc_start_main() is not in the source standard; it is only in the binary standard.

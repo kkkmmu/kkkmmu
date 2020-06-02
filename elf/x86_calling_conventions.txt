@@ -1,0 +1,255 @@
+x86 calling conventions
+From Wikipedia, the free encyclopedia
+Jump to navigationJump to search
+
+
+This article has multiple issues. Please help improve it or discuss these issues on the talk page. (Learn how and when to remove these template messages)
+This article includes a list of references, but its sources remain unclear because it has insufficient inline citations. (February 2008)
+This article has an unclear citation style. (February 2015)
+This article describes the calling conventions used when programming x86 architecture microprocessors.
+
+Calling conventions describe the interface of called code:
+
+The order in which atomic (scalar) parameters, or individual parts of a complex parameter, are allocated
+How parameters are passed (pushed on the stack, placed in registers, or a mix of both)
+Which registers the called function must preserve for the caller (also known as: callee-saved registers or non-volatile registers)
+How the task of preparing the stack for, and restoring after, a function call is divided between the caller and the callee
+This is intimately related with the assignment of sizes and formats to programming-language types. Another closely related topic is name mangling, which determines how symbol names in the code map to symbol names used by the linker. Calling conventions, type representations, and name mangling are all part of what is known as an application binary interface (ABI).
+
+There are often subtle differences in how various compilers implement these conventions, so it is often difficult to interface code which is compiled by different compilers. On the other hand, conventions which are used as an API standard (such as stdcall) are very uniformly implemented.
+
+
+Contents
+1	Historical background
+2	Caller clean-up
+2.1	cdecl
+2.2	syscall
+2.3	optlink
+3	Callee clean-up
+3.1	pascal
+3.2	stdcall
+3.3	Microsoft fastcall
+3.4	Microsoft vectorcall
+3.5	Borland register
+3.6	Watcom register
+3.7	TopSpeed / Clarion / JPI
+3.8	safecall
+4	Either caller or callee clean-up
+4.1	thiscall
+5	Register preservation
+5.1	Caller-saved (volatile) registers
+5.2	Callee-saved (non-volatile) registers
+6	x86-64 calling conventions
+6.1	Microsoft x64 calling convention
+6.2	System V AMD64 ABI
+7	List of x86 calling conventions
+8	References
+8.1	Footnotes
+8.2	Other sources
+9	Further reading
+Historical background
+Prior to microcomputers, the machine manufacturer generally provided an operating system and compilers for several programming languages. The calling convention(s) for each platform were those defined by the manufacturer's programming tools.
+
+Early microcomputers before the Commodore Pet and Apple II generally came without an OS or compilers. The IBM PC came with Microsoft's fore-runner to Windows, the Disk Operating System (DOS), but it did not come with a compiler. The only hardware standard for IBM PC-compatible machines was defined by the Intel processors (8086, 80386) and the literal hardware IBM shipped. Hardware extensions and all software standards (save for a BIOS calling convention) were thrown open to market competition.
+
+A multitude of independent software firms offered operating systems, compilers for many programming languages, and applications. Many different calling schemes were implemented by the firms, often mutually exclusive, based on different requirements, historical practices, and programmer creativity.
+
+After the IBM-compatible market shakeout, Microsoft operating systems and programming tools (with differing conventions) predominated, while second-tier firms like Borland and Novell, and open-source projects like GCC, still maintained their own standards. Provisions for interoperability between vendors and products were eventually adopted, simplifying the problem of choosing a viable convention.[1]
+
+Caller clean-up
+In these conventions, the caller cleans the arguments from the stack.
+
+cdecl
+The cdecl (which stands for C declaration) is a calling convention that originates from the C programming language and is used by many C compilers for the x86 architecture.[1] In cdecl, subroutine arguments are passed on the stack. Integer values and memory addresses are returned in the EAX register, floating point values in the ST0 x87 register. Registers EAX, ECX, and EDX are caller-saved, and the rest are callee-saved. The x87 floating point registers ST0 to ST7 must be empty (popped or freed) when calling a new function, and ST1 to ST7 must be empty on exiting a function. ST0 must also be empty when not used for returning a value.
+
+In the context of the C programming language, function arguments are pushed on the stack in the right-to-left order, i.e. the last argument is pushed first. In Linux, GCC sets the de facto standard for calling conventions. Since GCC version 4.5, the stack must be aligned to a 16-byte boundary when calling a function (previous versions only required a 4-byte alignment.)[citation needed][2]
+
+Consider the following C source code snippet:
+
+int callee(int, int, int);
+
+int caller(void)
+{
+	return callee(1, 2, 3) + 5;
+}
+On x86, it might produce the following assembly code (Intel syntax):
+
+caller:
+    ; make new call frame
+    ; (some compilers may produce an 'enter' instruction instead)
+    push    ebp       ; save old call frame
+    mov     ebp, esp  ; initialize new call frame
+    ; push call arguments, in reverse
+    ; (some compilers may subtract the required space from the stack pointer,
+    ; then write each argument directly, see below.
+    ; The 'enter' instruction can also do something similar)
+    ; sub esp, 12      : 'enter' instruction could do this for us
+    ; mov [ebp-4], 3   : or mov [esp+8], 3
+    ; mov [ebp-8], 2   : or mov [esp+4], 2
+    ; mov [ebp-12], 1  : or mov [esp], 1
+    push    3
+    push    2
+    push    1
+    call    callee    ; call subroutine 'callee'
+    add     esp, 12   ; remove call arguments from frame
+    add     eax, 5    ; modify subroutine result
+                      ; (eax is the return value of our callee,
+                      ; so we don't have to move it into a local variable)
+    ; restore old call frame
+    ; (some compilers may produce a 'leave' instruction instead)
+    mov     esp, ebp  ; most calling conventions dictate ebp be callee-saved,
+                      ; i.e. it's preserved after calling the callee.
+                      ; it therefore still points to the start of our stack frame.
+                      ; we do need to make sure
+                      ; callee doesn't modify (or restores) ebp, though,
+                      ; so we need to make sure
+                      ; it uses a calling convention which does this
+    pop     ebp       ; restore old call frame
+    ret               ; return
+The caller cleans the stack after the function call returns.
+
+There are some variations in the interpretation of cdecl, particularly in how to return values. As a result, x86 programs compiled for different operating system platforms and/or by different compilers can be incompatible, even if they both use the "cdecl" convention and do not call out to the underlying environment. Some compilers return simple data structures with a length of 2 registers or less in the register pair EAX:EDX, and larger structures and class objects requiring special treatment by the exception handler (e.g., a defined constructor, destructor, or assignment) are returned in memory. To pass "in memory", the caller allocates memory and passes a pointer to it as a hidden first parameter; the callee populates the memory and returns the pointer, popping the hidden pointer when returning.[3]
+
+In Linux/GCC, double/floating point values should be pushed on the stack via the x87 pseudo-stack. Like so:
+
+; Caller code
+	sub     esp, 8          ; make room for the double
+	fld     [ebp + x]       ; load our double onto the floating point stack
+	fstp    [esp]           ; push our double onto the stack
+	call    funct
+	add     esp, 8
+Using this method ensures it is pushed on the stack in the correct format.
+
+The cdecl calling convention is usually the default calling convention for x86 C compilers, although many compilers provide options to automatically change the calling conventions used. To manually define a function to be cdecl, some support the following syntax:
+
+return_type __cdecl func_name();
+The __cdecl modifier must be included in the function prototype and in the function declaration, to override any other settings that might be in place.
+
+syscall
+This is similar to cdecl in that arguments are pushed right-to-left. EAX, ECX, and EDX are not preserved. The size of the parameter list in doublewords is passed in AL.
+
+Syscall is the standard calling convention for 32 bit OS/2 API.
+
+optlink
+Arguments are pushed right-to-left. The three first (leftmost) arguments are passed in EAX, EDX, and ECX and up to four floating-point arguments are passed in ST0 through ST3, although space for them is reserved in the argument list on the stack. Results are returned in EAX or ST0. Registers EBP, EBX, ESI, and EDI are preserved.
+
+Optlink is used by the IBM VisualAge compilers.
+
+Callee clean-up
+In these conventions, the callee cleans up the arguments from the stack. Functions which utilize these conventions are easy to recognize in ASM code because they will unwind the stack after returning. The x86 ret instruction allows an optional 16-bit parameter that specifies the number of stack bytes to release after returning to the caller. Such code looks like this:
+
+ret 12
+Conventions entitled fastcall or register have not been standardized, and have been implemented differently, depending on the compiler vendor.[1] Typically register based calling conventions pass one or more arguments in registers which reduces the number of memory accesses required for the call and thus make them usually faster.
+
+pascal
+Based on the Borland Pascal programming language's calling convention, the parameters are pushed on the stack in left-to-right order (opposite of cdecl), and the callee is responsible for removing them from the stack.
+
+Returning the result works as follows:
+
+Ordinal values are returned in AL (8-bit values), AX (16-bit values), EAX (32-bit values), or DX:AX (32-bit values on 16-bit systems).
+Real values are returned in DX:BX:AX.
+Floating point (8087) values are returned in ST0.
+Pointers are returned in EAX on 32-bit systems and in AX in 16-bit systems.
+Strings are returned in a temporary location pointed by the @Result symbol.
+This calling convention was common in the following 16-bit APIs: OS/2 1.x, Microsoft Windows 3.x, and Borland Delphi version 1.x. Modern versions of the Windows API use stdcall, which still has the callee restoring the stack as in the Pascal convention, but the parameters are now pushed right to left.
+
+stdcall
+The stdcall[4] calling convention is a variation on the Pascal calling convention in which the callee is responsible for cleaning up the stack, but the parameters are pushed onto the stack in right-to-left order, as in the _cdecl calling convention. Registers EAX, ECX, and EDX are designated for use within the function. Return values are stored in the EAX register.
+
+stdcall is the standard calling convention for the Microsoft Win32 API and for Open Watcom C++.
+
+Microsoft fastcall
+Microsoft[5] or GCC[6] __fastcall convention (aka __msfastcall) passes the first two arguments (evaluated left to right) that fit into ECX and EDX. Remaining arguments are pushed onto the stack from right to left. When MS compiler compiles for IA64 or AMD64, it ignores the __fastcall keyword and uses the one 64-bit calling convention instead.
+
+Microsoft vectorcall
+In Visual Studio 2013, Microsoft introduced the __vectorcall calling convention in response to efficiency concerns from game, graphic, video/audio, and codec developers. The scheme allows for larger vector types (float, double, __m128, __m256) to be passed in registers as opposed to on the stack.[7]
+
+For IA-32 and x64 code, __vectorcall is similar to __fastcall and the original x64 calling conventions respectively, but extends them to support passing vector arguments using SIMD registers. In IA-32, the integer values are passed as usual, and the first six SIMD (XMM/YMM0-5) registers hold up to six floating-point, vector, or HVA values sequentially from left to right, regardless of actual positions caused by, e.g. an int argument appearing between them. In x64, however, the rule from the original x64 convention still apply, so that XMM/YMM0-5 only hold floating-point, vector, or HVA arguments when they happen to be the first through the sixth.[8]
+
+__vectorcall adds support for passing homogeneous vector aggregate (HVA) values, which are composite types (structs) consisting solely of up to four identical vector types, using the same six registers. Once the registers have been allocated for vector type arguments, the unused registers are allocated to HVA arguments from left to right. The positioning rules still apply. Resulting vector type and HVA values are returned using the first four XMM/YMM registers.[8]
+
+The clang compiler and the Intel C++ compiler also implements vectorcall.[9] Intel C++ compiler had a similar, earlier convention called __regcall; it is also supported by clang.[10]
+
+Borland register
+Evaluating arguments from left to right, it passes three arguments via EAX, EDX, ECX. Remaining arguments are pushed onto the stack, also left to right.[11] It is the default calling convention of the 32-bit compiler of Delphi, where it is known as register. GCC supports this calling convention with the regparm=3 option. It has been used by the Linux kernel on i386 since version 2.6.20 (released February 2007).[12]. This calling convention is also used by Embarcadero's C++Builder, where it is called __fastcall.[13] In this compiler, Microsoft's fastcall can be used as __msfastcall[14].
+
+Watcom register
+Watcom does not support the __fastcall keyword except to alias it to null. The register calling convention may be selected by command line switch. (However, IDA uses __fastcall anyway for uniformity.)
+
+Up to 4 registers are assigned to arguments in the order EAX, EDX, EBX, ECX. Arguments are assigned to registers from left to right. If any argument cannot be assigned to a register (say it is too large) it, and all subsequent arguments, are assigned to the stack. Arguments assigned to the stack are pushed from right to left. Names are mangled by adding a suffixed underscore.
+
+Variadic functions fall back to the Watcom stack based calling convention.
+
+The Watcom C/C++ compiler also uses the #pragma aux[15] directive that allows the user to specify their own calling convention. As its manual states, "Very few users are likely to need this method, but if it is needed, it can be a lifesaver".
+
+TopSpeed / Clarion / JPI
+The first four integer parameters are passed in registers eax, ebx, ecx and edx. Floating point parameters are passed on the floating point stack – registers st0, st1, st2, st3, st4, st5 and st6. Structure parameters are always passed on the stack. Additional parameters are passed on the stack after registers are exhausted. Integer values are returned in eax, pointers in edx and floating point types in st0.
+
+safecall
+In Delphi and Free Pascal on Microsoft Windows, the safecall calling convention encapsulates COM (Component Object Model) error handling, thus exceptions aren't leaked out to the caller, but are reported in the HRESULT return value, as required by COM/OLE. When calling a safecall function from Delphi code, Delphi also automatically checks the returned HRESULT and raises an exception if necessary.
+
+The safecall calling convention is the same as the stdcall calling convention, except that exceptions are passed back to the caller in EAX as a HResult (instead of in FS:[0]), while the function result is passed by reference on the stack as though it were a final "out" parameter. When calling a Delphi function from Delphi this calling convention will appear just like any other calling convention, because although exceptions are passed back in EAX, they are automatically converted back to proper exceptions by the caller. When using COM objects created in other languages, the HResults will be automatically raised as exceptions, and the result for Get functions is in the result rather than a parameter. When creating COM objects in Delphi with safecall, there is no need to worry about HResults, as exceptions can be raised as normal but will be seen as HResults in other languages.
+
+function function_name(a: DWORD): DWORD; safecall;
+Returns a result and raises exceptions like a normal Delphi function, but it passes values and exceptions as though it was:
+
+function function_name(a: DWORD; out Result: DWORD): HResult; stdcall;
+Either caller or callee clean-up
+thiscall
+This calling convention is used for calling C++ non-static member functions. There are two primary versions of thiscall used depending on the compiler and whether or not the function uses a variable number of arguments.
+
+For the GCC compiler, thiscall is almost identical to cdecl: The caller cleans the stack, and the parameters are passed in right-to-left order. The difference is the addition of the this pointer, which is pushed onto the stack last, as if it were the first parameter in the function prototype.
+
+On the Microsoft Visual C++ compiler, the this pointer is passed in ECX and it is the callee that cleans the stack, mirroring the stdcall convention used in C for this compiler and in Windows API functions. When functions use a variable number of arguments, it is the caller that cleans the stack (cf. cdecl).
+
+The thiscall calling convention can only be explicitly specified on Microsoft Visual C++ 2005 and later. On any other compiler thiscall is not a keyword. (However, disassemblers, such as IDA, must specify it. So IDA uses keyword __thiscall for this.)
+
+Register preservation
+Another part of a calling convention is which registers are guaranteed to retain their values after a subroutine call.
+
+Caller-saved (volatile) registers
+According to the Intel ABI to which the vast majority of compilers conform, the EAX, EDX, and ECX are to be free for use within a procedure or function, and need not be preserved[citation needed].
+
+As the name implies, these general-purpose registers usually hold temporary (volatile) information, that can be overwritten by any subroutine.
+
+Therefore, it is the caller's responsibility to push each of these registers onto the stack, if it would like to restore their values after a subroutine call.
+
+Callee-saved (non-volatile) registers
+The other registers are used to hold long-lived values (non-volatile), that should be preserved across calls.
+
+In other words, when the caller makes a procedure call, it can expect that those registers will hold the same value after the callee returns.
+
+Thus, making it the callee's responsibility to both save (push at the beginning) and restore (pop accordingly) them before returning to the caller. As in the previous case, this practice should only be done on registers that the callee changes.
+
+x86-64 calling conventions
+x86-64 calling conventions take advantage of the additional register space to pass more arguments in registers. Also, the number of incompatible calling conventions has been reduced. There are two in common use.
+
+Microsoft x64 calling convention
+The Microsoft x64 calling convention[16][17] is followed on Windows and pre-boot UEFI (for long mode on x86-64). The first four arguments are placed onto the registers. That means RCX, RDX, R8, R9 for integer, struct or pointer arguments (in that order), and XMM0, XMM1, XMM2, XMM3 for floating point arguments. Additional arguments are pushed onto the stack (right to left). Integer return values (similar to x86) are returned in RAX if 64 bits or less. Floating point return values are returned in XMM0. Parameters less than 64 bits long are not zero extended; the high bits are not zeroed.
+
+Structs and unions with sizes that match integers are passed and returned as if they were integers. Otherwise they are replaced with a pointer when used as an argument. When an oversized struct return is needed, another pointer to a caller-provided space is prepended as the first argument, shifting all other arguments to the right by one place.[18]
+
+When compiling for the x64 architecture in a Windows context (whether using Microsoft or non-Microsoft tools), stdcall, thiscall, cdecl, and fastcall all resolve to using this convention.
+
+In the Microsoft x64 calling convention, it is the caller's responsibility to allocate 32 bytes of "shadow space" on the stack right before calling the function (regardless of the actual number of parameters used), and to pop the stack after the call. The shadow space is used to spill RCX, RDX, R8, and R9,[19] but must be made available to all functions, even those with fewer than four parameters.
+
+The registers RAX, RCX, RDX, R8, R9, R10, R11 are considered volatile (caller-saved).[20]
+
+The registers RBX, RBP, RDI, RSI, RSP, R12, R13, R14, and R15 are considered nonvolatile (callee-saved).[20]
+
+For example, a function taking 5 integer arguments will take the first to fourth in registers, and the fifth will be pushed on top of the shadow space. So when the called function is entered, the stack will be composed of (in ascending order) the return address, followed by the shadow space (32 bytes) followed by the fifth parameter.
+
+In x86-64, Visual Studio 2008 stores floating point numbers in XMM6 and XMM7 (as well as XMM8 through XMM15); consequently, for x86-64, user-written assembly language routines must preserve XMM6 and XMM7 (as compared to x86 wherein user-written assembly language routines did not need to preserve XMM6 and XMM7). In other words, user-written assembly language routines must be updated to save/restore XMM6 and XMM7 before/after the function when being ported from x86 to x86-64.
+
+Starting with Visual Studio 2013, Microsoft introduced the __vectorcall calling convention which extends the x64 convention.
+
+System V AMD64 ABI
+The calling convention of the System V AMD64 ABI is followed on Solaris, Linux, FreeBSD, macOS,[21] and is the de facto standard among Unix and Unix-like operating systems. The first six integer or pointer arguments are passed in registers RDI, RSI, RDX, RCX, R8, R9 (R10 is used as a static chain pointer in case of nested functions[22]:21), while XMM0, XMM1, XMM2, XMM3, XMM4, XMM5, XMM6 and XMM7 are used for the first floating point arguments.[22]:22 As in the Microsoft x64 calling convention, additional arguments are passed on the stack.[22]:22 Integer return values up to 64 bits in size are stored in RAX while values up to 128 bit are stored in RAX and RDX. Floating-point return values are similarly stored in XMM0 and XMM1[22]:25. The wider YMM and ZMM registers are used for passing and returning wider values in place of XMM when they exist.[22]:26,55
+
+If the callee wishes to use registers RBX, RBP, and R12–R15, it must restore their original values before returning control to the caller. All other registers must be saved by the caller if it wishes to preserve their values.[22]:16
+
+For leaf-node functions (functions which do not call any other function(s)), a 128-byte space is stored just beneath the stack pointer of the function. The space is called red-zone. This zone will not be clobbered by any signal or interrupt handlers. Compilers can thus utilize this zone to save local variables. Compilers may omit some instructions at the starting of the function (adjustment of RSP, RBP) by utilizing this zone. However, other functions may clobber this zone. Therefore, this zone should only be used for leaf-node functions. gcc and clang offer the -mno-red-zone flag to disable red-zone optimizations.
+
+If the callee is a variadic function, then the number of floating point arguments passed to the function in vector registers must be provided by the caller in the AL register.[22]:55
+
+Unlike the Microsoft calling convention, a shadow space is not provided; on function entry, the return address is adjacent to the seventh integer argument on the stack.

@@ -6,3 +6,6 @@
 
 3. https://asmtutor.com/
 
+4. http://dbp-consulting.com/
+
+5. https://manybutfinite.com/post/journey-to-the-stack/

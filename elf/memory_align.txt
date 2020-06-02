@@ -1,0 +1,44 @@
+Alignment of variables in memory (a short history).
+
+In the past computers had an 8 bits databus. This means, that each clock cycle 8 bits of information could be processed. Which was fine then.
+
+Then came 16 bit computers. Due to downward compatibility and other issues, the 8 bit byte was kept and the 16 bit word was introduced. Each word was 2 bytes. And each clock cycle 16 bits of information could be processed. But this posed a small problem.
+
+Let's look at a memory map:
+
++----+
+|0000| 
+|0001|
++----+
+|0002|
+|0003|
++----+
+|0004|
+|0005|
++----+
+| .. |
+At each address there is a byte which can be accessed individually. But words can only be fetched at even addresses. So if we read a word at 0000, we read the bytes at 0000 and 0001. But if we want to read the word at position 0001, we need two read accesses. First 0000,0001 and then 0002,0003 and we only keep 0001,0002.
+
+Of course this took some extra time and that was not appreciated. So that's why they invented alignment. So we store word variables at word boundaries and byte variables at byte boundaries.
+
+For example, if we have a structure with a byte field (B) and a word field (W) (and a very naive compiler), we get the following:
+
++----+
+|0000| B
+|0001| W
++----+
+|0002| W
+|0003|
++----+
+Which is not fun. But when using word alignment we find:
+
++----+
+|0000| B
+|0001| -
++----+
+|0002| W
+|0003| W
++----+
+Here memory is sacrificed for access speed.
+
+You can imagine that when using double word (4 bytes) or quad word (8 bytes) this is even more important. That's why with most modern compilers you can chose which alignment you are using while compiling the program.
