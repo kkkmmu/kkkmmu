@@ -1,0 +1,27 @@
+0x08048428 <main+0>:    push   %ebp                 ; save previous value.
+0x08048429 <main+1>:    mov    %esp,%ebp            ; create new stack frame.
+0x0804842b <main+3>:    and    $0xfffffff0,%esp     ; align to boundary.
+0x0804842e <main+6>:    sub    $0x10,%esp           ; make space on stack.
+
+0x08048431 <main+9>:    movl   $0x3,0x8(%esp)       ; push values for function.
+0x08048439 <main+17>:   movl   $0x2,0x4(%esp)
+0x08048441 <main+25>:   movl   $0x1,(%esp)
+0x08048448 <main+32>:   call   0x8048404 <function> ; and call it.
+
+0x0804844d <main+37>:   leave                       ; tear down frame.
+0x0804844e <main+38>:   ret                         ; and exit.
+
+0x08048404 <func+0>:    push   %ebp                 ; save previous value.
+0x08048405 <func+1>:    mov    %esp,%ebp            ; create new stack frame.
+0x08048407 <func+3>:    sub    $0x28,%esp           ; make space on stack.
+0x0804840a <func+6>:    mov    %gs:0x14,%eax        ; get sentinel value.
+0x08048410 <func+12>:   mov    %eax,-0xc(%ebp)      ; put on stack.
+
+0x08048413 <func+15>:   xor    %eax,%eax            ; set return code 0.
+
+0x08048415 <func+17>:   mov    -0xc(%ebp),%eax      ; get sentinel from stack.
+0x08048418 <func+20>:   xor    %gs:0x14,%eax        ; compare with actual.
+0x0804841f <func+27>:   je     <func+34>            ; jump if okay.
+0x08048421 <func+29>:   call   <_stk_chk_fl>        ; otherwise corrupted stack.
+0x08048426 <func+34>:   leave                       ; tear down frame.
+0x08048427 <func+35>:   ret                         ; and exit.
