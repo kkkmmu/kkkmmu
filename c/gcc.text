@@ -1,0 +1,156 @@
+Getting the Return or Frame Address of a Function
+
+These functions may be used to get information about the callers of a function.
+
+Built-in Function: void * __builtin_return_address (unsigned int level)
+This function returns the return address of the current function, or of one of its callers. The level argument is number of frames to scan up the call stack. A value of 0 yields the return address of the current function, a value of 1 yields the return address of the caller of the current function, and so forth. When inlining the expected behavior is that the function returns the address of the function that is returned to. To work around this behavior use the noinline function attribute.
+
+The level argument must be a constant integer.
+
+On some machines it may be impossible to determine the return address of any function other than the current one; in such cases, or when the top of the stack has been reached, this function returns 0 or a random value. In addition, __builtin_frame_address may be used to determine if the top of the stack has been reached.
+
+Additional post-processing of the returned value may be needed, see __builtin_extract_return_addr.
+
+Calling this function with a nonzero argument can have unpredictable effects, including crashing the calling program. As a result, calls that are considered unsafe are diagnosed when the -Wframe-address option is in effect. Such calls should only be made in debugging situations.
+
+Built-in Function: void * __builtin_extract_return_addr (void *addr)
+The address as returned by __builtin_return_address may have to be fed through this function to get the actual encoded address. For example, on the 31-bit S/390 platform the highest bit has to be masked out, or on SPARC platforms an offset has to be added for the true next instruction to be executed.
+
+If no fixup is needed, this function simply passes through addr.
+
+Built-in Function: void * __builtin_frob_return_addr (void *addr)
+This function does the reverse of __builtin_extract_return_addr.
+
+Built-in Function: void * __builtin_frame_address (unsigned int level)
+This function is similar to __builtin_return_address, but it returns the address of the function frame rather than the return address of the function. Calling __builtin_frame_address with a value of 0 yields the frame address of the current function, a value of 1 yields the frame address of the caller of the current function, and so forth.
+
+The frame is the area on the stack that holds local variables and saved registers. The frame address is normally the address of the first word pushed on to the stack by the function. However, the exact definition depends upon the processor and the calling convention. If the processor has a dedicated frame pointer register, and the function has a frame, then __builtin_frame_address returns the value of the frame pointer register.
+
+On some machines it may be impossible to determine the frame address of any function other than the current one; in such cases, or when the top of the stack has been reached, this function returns 0 if the first frame pointer is properly initialized by the startup code.
+
+Calling this function with a nonzero argument can have unpredictable effects, including crashing the calling program. As a result, calls that are considered unsafe are diagnosed when the -Wframe-address option is in effect. Such calls should only be made in debugging situations.
+
+6.6 Constructing Function Calls
+Using the built-in functions described below, you can record the arguments a function received, and call another function with the same arguments, without knowing the number or types of the arguments.
+
+You can also record the return value of that function call, and later return that value, without knowing what data type the function tried to return (as long as your caller expects that data type).
+
+However, these built-in functions may interact badly with some sophisticated features or other extensions of the language. It is, therefore, not recommended to use them outside very simple functions acting as mere forwarders for their arguments.
+
+Built-in Function: void * __builtin_apply_args ()
+This built-in function returns a pointer to data describing how to perform a call with the same arguments as are passed to the current function.
+
+The function saves the arg pointer register, structure value address, and all registers that might be used to pass arguments to a function into a block of memory allocated on the stack. Then it returns the address of that block.
+
+Built-in Function: void * __builtin_apply (void (*function)(), void *arguments, size_t size)
+This built-in function invokes function with a copy of the parameters described by arguments and size.
+
+The value of arguments should be the value returned by __builtin_apply_args. The argument size specifies the size of the stack argument data, in bytes.
+
+This function returns a pointer to data describing how to return whatever value is returned by function. The data is saved in a block of memory allocated on the stack.
+
+It is not always simple to compute the proper value for size. The value is used by __builtin_apply to compute the amount of data that should be pushed on the stack and copied from the incoming argument area.
+
+Built-in Function: void __builtin_return (void *result)
+This built-in function returns the value described by result from the containing function. You should specify, for result, a value returned by __builtin_apply.
+
+Built-in Function: __builtin_va_arg_pack ()
+This built-in function represents all anonymous arguments of an inline function. It can be used only in inline functions that are always inlined, never compiled as a separate function, such as those using __attribute__ ((__always_inline__)) or __attribute__ ((__gnu_inline__)) extern inline functions. It must be only passed as last argument to some other function with variable arguments. This is useful for writing small wrapper inlines for variable argument functions, when using preprocessor macros is undesirable. For example:
+
+extern int myprintf (FILE *f, const char *format, ...);
+extern inline __attribute__ ((__gnu_inline__)) int
+myprintf (FILE *f, const char *format, ...)
+{
+  int r = fprintf (f, "myprintf: ");
+  if (r < 0)
+    return r;
+  int s = fprintf (f, format, __builtin_va_arg_pack ());
+  if (s < 0)
+    return s;
+  return r + s;
+}
+Built-in Function: size_t __builtin_va_arg_pack_len ()
+This built-in function returns the number of anonymous arguments of an inline function. It can be used only in inline functions that are always inlined, never compiled as a separate function, such as those using __attribute__ ((__always_inline__)) or __attribute__ ((__gnu_inline__)) extern inline functions. For example following does link- or run-time checking of open arguments for optimized code:
+
+#ifdef __OPTIMIZE__
+extern inline __attribute__((__gnu_inline__)) int
+myopen (const char *path, int oflag, ...)
+{
+  if (__builtin_va_arg_pack_len () > 1)
+    warn_open_too_many_arguments ();
+
+  if (__builtin_constant_p (oflag))
+    {
+      if ((oflag & O_CREAT) != 0 && __builtin_va_arg_pack_len () < 1)
+        {
+          warn_open_missing_mode ();
+          return __open_2 (path, oflag);
+        }
+      return open (path, oflag, __builtin_va_arg_pack ());
+    }
+
+  if (__builtin_va_arg_pack_len () < 1)
+    return __open_2 (path, oflag);
+
+  return open (path, oflag, __builtin_va_arg_pack ());
+}
+#endif
+
+
+Referring to a Type with typeof
+Another way to refer to the type of an expression is with typeof. The syntax of using of this keyword looks like sizeof, but the construct acts semantically like a type name defined with typedef.
+
+There are two ways of writing the argument to typeof: with an expression or with a type. Here is an example with an expression:
+
+typeof (x[0](1))
+This assumes that x is an array of pointers to functions; the type described is that of the values of the functions.
+
+Here is an example with a typename as the argument:
+
+typeof (int *)
+Here the type described is that of pointers to int.
+
+If you are writing a header file that must work when included in ISO C programs, write __typeof__ instead of typeof. See Alternate Keywords.
+
+A typeof construct can be used anywhere a typedef name can be used. For example, you can use it in a declaration, in a cast, or inside of sizeof or typeof.
+
+The operand of typeof is evaluated for its side effects if and only if it is an expression of variably modified type or the name of such a type.
+
+typeof is often useful in conjunction with statement expressions (see Statement Exprs). Here is how the two together can be used to define a safe “maximum” macro which operates on any arithmetic type and evaluates each of its arguments exactly once:
+
+#define max(a,b) \
+  ({ typeof (a) _a = (a); \
+      typeof (b) _b = (b); \
+    _a > _b ? _a : _b; })
+The reason for using names that start with underscores for the local variables is to avoid conflicts with variable names that occur within the expressions that are substituted for a and b. Eventually we hope to design a new form of declaration syntax that allows you to declare variables whose scopes start only after their initializers; this will be a more reliable way to prevent such conflicts.
+
+Some more examples of the use of typeof:
+
+This declares y with the type of what x points to.
+typeof (*x) y;
+This declares y as an array of such values.
+typeof (*x) y[4];
+This declares y as an array of pointers to characters:
+typeof (typeof (char *)[4]) y;
+It is equivalent to the following traditional C declaration:
+
+char *y[4];
+To see the meaning of the declaration using typeof, and why it might be a useful way to write, rewrite it with these macros:
+
+#define pointer(T)  typeof(T *)
+#define array(T, N) typeof(T [N])
+Now the declaration can be rewritten this way:
+
+array (pointer (char), 4) y;
+Thus, array (pointer (char), 4) is the type of arrays of 4 pointers to char.
+
+In GNU C, but not GNU C++, you may also declare the type of a variable as __auto_type. In that case, the declaration must declare only one variable, whose declarator must just be an identifier, the declaration must be initialized, and the type of the variable is determined by the initializer; the name of the variable is not in scope until after the initializer. (In C++, you should use C++11 auto for this purpose.) Using __auto_type, the “maximum” macro above could be written as:
+
+#define max(a,b) \
+  ({ __auto_type _a = (a); \
+      __auto_type _b = (b); \
+    _a > _b ? _a : _b; })
+Using __auto_type instead of typeof has two advantages:
+
+Each argument to the macro appears only once in the expansion of the macro. This prevents the size of the macro expansion growing exponentially when calls to such macros are nested inside arguments of such macros.
+If the argument to the macro has variably modified type, it is evaluated only once when using __auto_type, but twice if typeof is used.
