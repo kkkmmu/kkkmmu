@@ -1,0 +1,199 @@
+GCC Extensions
+I have been using GCC quite much, but I haven’t really ever used its extensions (except some C99 features in C90). Recently, I stumbled upon the documentation of all the extensions, so I figured to list few of the special ones here.
+
+Function overloading
+By using __typeof__ and __builtin_types_compatible_p(type1, type2), it is possible to (kinda) overload functions in C. Let’s say for example that you want to implement is_equal function, which would work on integers and strings. By using __builtin_types_compatible_p you could check what type the given parameter is, and then call the appropriate function.
+
+#include <stdio.h>
+#include <string.h>
+
+#define is_equal(x, y)                                              \
+    do {                                                            \
+        if (__builtin_types_compatible_p(__typeof__ (x), char[]))   \
+            is_equal_string(x, y);                                  \
+        else if (__builtin_types_compatible_p(__typeof__ (x), int)) \
+            is_equal_int(x, y);                                     \
+    } while (0)
+
+void is_equal_string(const char * x, const char * y)
+{
+    printf("%s: '%s' and '%s' are %sthe same\n",
+           __func__, x, y, strcmp(x, y) != 0 ? "not " : "");
+}
+
+void is_equal_int(int x, int y)
+{
+    printf("%s: '%d' and '%d' are %sthe same\n",
+           __func__, x, y, x != y ? "not " : "");
+}
+
+int main(void)
+{
+    is_equal(1, 1);
+
+    is_equal("foo", "foo");
+
+    return 0;
+}
+Cleanup when variable goes out of scope
+With GCC’s variable attributes, you can specify a function that is to be called when the variable goes out of scope. This function receives a pointer to the parameter, so it can be used e.g. to close a file:
+
+#include <stdio.h>
+
+void cleanup_file(FILE **f)
+{
+    if (*f) {
+        printf("closing file\n");
+        fclose(*f);
+    }
+}
+
+void func(void)
+{
+    FILE * f __attribute__ ((cleanup(cleanup_file))) = fopen("/dev/null", "w");
+    if (!f) {
+        return;
+    }
+
+    fprintf(f, "test string");
+}
+
+int main(void)
+{
+    func();
+
+    return 0;
+}
+Built-in apply
+void func_without_void();
+void func_with_void(void);
+As you may (or may not) know, the function declarations above mean quite different things in C. The first one accepts any number of arguments (of any type) and the second one doesn’t accept any arguments at all. Hence, first one could be called as (and compilers should consider it valid):
+
+func_without_void(10);
+but you cannot really access the variable since you don’t give it any name (or even type) in the definition. But here comes __builtin_apply and __builtin_apply_args to the picture. With __builtin_apply_args you get a pointer to arguments given to the function and with __builtin_apply(void (*function)(), void *arguments, size_t size), you can call a different function with the arguments. So, for example:
+
+#include <stdio.h>
+
+void func_with_args(int i)
+{
+    printf("received %d\n", i);
+}
+
+void func_without_void()
+{
+    void* args = __builtin_apply_args();
+
+    __builtin_apply(func_with_args, args, sizeof(int));
+}
+
+int main(void)
+{
+    func_without_void(10);
+
+    return 0;
+}
+And it prints:
+
+$ gcc -std=gnu11 -Wall -Wextra builtin-args.c -o builtin-args
+$ ./builtin-args
+received 10
+Extended ASM
+You can easily embed assembly instructions to .c file and even read and write C variables from assembler (this is quite heavily used in Linux kernel). For example, if you would like to read the number of CPU cycles since reset, you could write (on x86):
+
+#include <stdio.h>
+#include <inttypes.h>
+
+void get_rdtsc(unsigned int * restrict h, unsigned int * restrict l)
+{
+    __asm__ volatile("rdtsc"
+                     : "=a" (*l), "=d" (*h));
+}
+
+int main(void)
+{
+    unsigned int h;
+    unsigned int l;
+
+    get_rdtsc(&h, &l);
+
+    printf("rdtsc: %" PRIu64 "\n", (((uint64_t)h) << 32) | l);
+
+    return 0;
+}
+Nested Functions
+Using GCC, you can actually have functions inside functions.
+
+#include <stdio.h>
+
+int func(int a, int (**func_p)(int))
+{
+    /* declare with auto */
+    auto int func2(int i);
+
+    *func_p = func2;
+
+    int func2(int i)
+    {
+        // Could use variable a if this function wouldn't be used outside
+        return i + 1;
+    }
+
+    return func2(5 + a);
+}
+
+int main(void)
+{
+    int (*func_p)(int);
+
+    printf("function with nested function returns %d\n",
+           func(5, &func_p));
+
+    printf("nested function returns %d\n",
+           func_p(5));
+
+    return 0;
+}
+Here, inside func, another function (func2) is first declared and then defined. Forward-declaration is not necessary here, but in order to do so, you actually must use auto (this is probably the only place where auto is needed). func returns a pointer to the nested function so it can also be used outside of the function (with some restrictions).
+
+Case ranges
+You can have a range in a switch-case:
+
+void func(int i)
+{
+    switch (i) {
+    case 0 ... 5:
+        printf("less than 6\n");
+        break;
+    default:
+        printf("6 or more\n");
+        break;
+    }
+}
+Forward-declaration of enum
+It is possible to declare an enumeration without specifying its values. There is not much that can be done with it, but it seems that it was added so enums would be handled similarly as structs or unions. Before this, I didn’t even know it is forbidden in ISO C.
+
+#include <stdio.h>
+
+enum en;
+void func(const enum en e);
+
+enum en {
+    FIRST,
+    SECOND
+};
+
+int main(void)
+{
+    enum en e = SECOND;
+
+    func(e);
+
+    return 0;
+}
+
+void func(enum en e)
+{
+    printf("enum is %d\n", e);
+
+}
+Complete sources of these examples (and few more) can be found in github. Rest of the extensions (and more through documentation of them) can be found from GCC docs.
