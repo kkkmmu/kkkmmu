@@ -3,3 +3,6 @@
 *.swp
 *.swo
 a.out
+CMakeFiles
+CMakeFiles/*
+CMakeCache.txt
