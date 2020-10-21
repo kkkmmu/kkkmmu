@@ -10,9 +10,9 @@ class Base
 		Base(double i) : _d(i) { std::cout << "Create base class with double " << i << endl; }
 		Base(std::string i) : _s(i) { std::cout << "Create base class with string " << i << endl; }
 		~Base() { std::cout << "Destroy base class " << endl; }
-		int get_int() { return _i; }
-		double get_double() { return _d; }
-		std::string get_string();
+		int get_int() const { return _i; }
+		double get_double() const { return _d; }
+		std::string get_string () const;
 
 	private:
 		int _i;
@@ -40,7 +40,7 @@ class Child : public Base
 		~Child() { cout << "Destroy sub class " << endl; }
 };
 
-std::string Base::get_string()
+std::string Base::get_string () const
 {
 	return _s;
 }
@@ -71,8 +71,6 @@ int main()
 	class Base& rc1 = cc;
 	class Base& rd1 = cd;
 	class Base& rs1 = cs;
-
-
 
 	cout << c.get_int() << " " << d.get_double() << " " << s.get_string() << endl;
 	cout << sc.get_int() << " " << sd.get_double() << " " << ss.get_string() << endl;
