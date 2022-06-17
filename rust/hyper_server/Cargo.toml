@@ -5,4 +5,4 @@ authors = ["lamproae <lwnope@163.com>"]
 
 [dependencies]
 futures="0.1.14"
-hyper="0.11.2"
+hyper="0.14.12"
