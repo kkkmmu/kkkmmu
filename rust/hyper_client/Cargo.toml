@@ -5,5 +5,5 @@ authors = ["lamproae <lwnope@163.com>"]
 
 [dependencies]
 futures="0.1"
-hyper="0.11"
+hyper="0.14"
 tokio-core="0.1"
